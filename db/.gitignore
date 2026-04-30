@@ -1,0 +1,15 @@
+*
+!.gitignore
+!postgres_data/
+!chroma_data/
+!neo4j_data/
+
+postgres_data/*
+chroma_data/*
+neo4j_data/*
+
+!postgres_data/.gitkeep
+!chroma_data/.gitkeep
+!neo4j_data/.gitkeep
+!neo4j_data/logs/
+!neo4j_data/logs/.gitkeep

@@ -1,0 +1,13 @@
+---
+description: Standards for unified Docker Compose across all standalone services
+globs: "{docker-compose*.yml,docker-compose*.yaml,**/Dockerfile.compose}"
+alwaysApply: false
+---
+
+# Docker Compose Standards
+
+- Keep one unified compose stack for `core_rag_graph`, `fin_rag`, `ra_literag`, `temporial_graph`, `temporial_graph_openai`, and `temporial_graph_traversal`.
+- Shared databases must be `postgres`, `neo4j`, and `chroma` with named volumes and health checks.
+- In container env values, use compose DNS names (`postgres`, `neo4j`, `chroma`) instead of `localhost`.
+- Any new service added to compose must also define explicit host and container ports and a startup command.
+- Prefer service-local `Dockerfile.compose` when no Dockerfile exists.
