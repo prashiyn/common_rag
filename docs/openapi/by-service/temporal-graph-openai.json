@@ -1,0 +1,5260 @@
+{
+  "components": {
+    "schemas": {
+      "Body_chunk_document_doc_processing_documents_chunk_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_chunk_document_doc_processing_documents_chunk_post",
+        "type": "object"
+      },
+      "Body_convert_ms_docs_doc_processing_documents_convert_ms_docs_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_convert_ms_docs_doc_processing_documents_convert_ms_docs_post",
+        "type": "object"
+      },
+      "Body_pdf_to_markdown_endpoint_doc_processing_documents_pdf_to_markdown_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_pdf_to_markdown_endpoint_doc_processing_documents_pdf_to_markdown_post",
+        "type": "object"
+      },
+      "Body_process_document_ra_literag_documents_process_post": {
+        "properties": {
+          "doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Id"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          },
+          "output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Dir"
+          },
+          "parse_method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parse Method"
+          },
+          "parser": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parser"
+          },
+          "workspace": {
+            "default": "default",
+            "description": "Tenant/workspace id",
+            "title": "Workspace",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_process_document_ra_literag_documents_process_post",
+        "type": "object"
+      },
+      "Body_process_using_deepseek_doc_processing_documents_process_using_deepseek_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_process_using_deepseek_doc_processing_documents_process_using_deepseek_post",
+        "type": "object"
+      },
+      "Body_process_using_glm_doc_processing_documents_process_using_glm_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_process_using_glm_doc_processing_documents_process_using_glm_post",
+        "type": "object"
+      },
+      "Body_process_using_unstructured_doc_processing_documents_process_using_unstructured_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_process_using_unstructured_doc_processing_documents_process_using_unstructured_post",
+        "type": "object"
+      },
+      "Body_xbrl_to_markdown_endpoint_doc_processing_documents_xbrl_to_markdown_post": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "Body_xbrl_to_markdown_endpoint_doc_processing_documents_xbrl_to_markdown_post",
+        "type": "object"
+      },
+      "ChunkInput": {
+        "properties": {
+          "bundle_id": {
+            "description": "Semantic bundle id",
+            "title": "Bundle Id",
+            "type": "string"
+          },
+          "chunk_id": {
+            "description": "Stable chunk identifier",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "content": {
+            "description": "Chunk text, table, or image description",
+            "title": "Content",
+            "type": "string"
+          },
+          "doc_id": {
+            "description": "Document id",
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "next_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Next chunk id",
+            "title": "Next Chunk"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Source page when available",
+            "title": "Page"
+          },
+          "prev_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Previous chunk id",
+            "title": "Prev Chunk"
+          },
+          "publish_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Document publish date if provided",
+            "title": "Publish Date"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Nearest section heading",
+            "title": "Section Title"
+          },
+          "title_summary": {
+            "default": "",
+            "description": "LLM section summary",
+            "title": "Title Summary",
+            "type": "string"
+          },
+          "type": {
+            "description": "One of text, table, image",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "content",
+          "type",
+          "doc_id",
+          "bundle_id"
+        ],
+        "title": "ChunkInput",
+        "type": "object"
+      },
+      "ChunkItem": {
+        "description": "One FFP chunk; fields mirror `doc_processing.ffp.pipeline.Chunk`.",
+        "properties": {
+          "bundle_id": {
+            "title": "Bundle Id",
+            "type": "string"
+          },
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "doc_id": {
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "next_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Chunk"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "prev_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prev Chunk"
+          },
+          "publish_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publish Date"
+          },
+          "references": {
+            "description": "Cross-references extracted from chunk text",
+            "items": {
+              "$ref": "#/components/schemas/ChunkReferenceItem"
+            },
+            "title": "References",
+            "type": "array"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Title"
+          },
+          "title_summary": {
+            "title": "Title Summary",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "content",
+          "type",
+          "doc_id",
+          "page",
+          "bundle_id",
+          "section_title",
+          "title_summary",
+          "publish_date",
+          "prev_chunk",
+          "next_chunk"
+        ],
+        "title": "ChunkItem",
+        "type": "object"
+      },
+      "ChunkReferenceItem": {
+        "description": "One extracted cross-reference (aligned with docs/REFERENCES.md).",
+        "properties": {
+          "confidence": {
+            "description": "Model confidence 0–1",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "reference_text": {
+            "description": "Exact phrase as it appears in the chunk",
+            "title": "Reference Text",
+            "type": "string"
+          },
+          "reference_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "TABLE",
+                  "FIGURE",
+                  "SECTION",
+                  "SUBSECTION",
+                  "APPENDIX",
+                  "NOTE",
+                  "FOOTNOTE",
+                  "SCHEDULE",
+                  "STATEMENT",
+                  "REGULATION",
+                  "OTHER"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "TABLE, FIGURE, SECTION, SUBSECTION, APPENDIX, NOTE, FOOTNOTE, SCHEDULE, STATEMENT, REGULATION, OTHER",
+            "title": "Reference Type"
+          },
+          "target_label": {
+            "description": "Normalized identifier for the target",
+            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference_text",
+          "reference_type",
+          "target_label",
+          "confidence"
+        ],
+        "title": "ChunkReferenceItem",
+        "type": "object"
+      },
+      "ChunkResponse": {
+        "description": "FFP pipeline chunks for RAG.",
+        "properties": {
+          "chunks": {
+            "description": "Structured chunks from FinancialFilingsPipeline",
+            "items": {
+              "$ref": "#/components/schemas/ChunkItem"
+            },
+            "title": "Chunks",
+            "type": "array"
+          }
+        },
+        "required": [
+          "chunks"
+        ],
+        "title": "ChunkResponse",
+        "type": "object"
+      },
+      "ChunkTimelineItem": {
+        "properties": {
+          "canonical_event": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Event"
+          },
+          "canonical_subevent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Subevent"
+          },
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "ingested_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingested At"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          },
+          "supersedes_snapshot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes Snapshot Id"
+          }
+        },
+        "title": "ChunkTimelineItem",
+        "type": "object"
+      },
+      "ChunkTimelineResponse": {
+        "properties": {
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ChunkTimelineItem"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "chunk_id",
+          "items"
+        ],
+        "title": "ChunkTimelineResponse",
+        "type": "object"
+      },
+      "ChunkType": {
+        "enum": [
+          "text",
+          "table",
+          "image"
+        ],
+        "title": "ChunkType",
+        "type": "string"
+      },
+      "CollectionGetOrCreateResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "created": {
+            "title": "Created",
+            "type": "boolean"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          },
+          "ontology_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ontology Version"
+          },
+          "registry_backend": {
+            "title": "Registry Backend",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "registry_backend",
+          "created"
+        ],
+        "title": "CollectionGetOrCreateResponse",
+        "type": "object"
+      },
+      "CollectionListResponse": {
+        "properties": {
+          "collections": {
+            "items": {
+              "$ref": "#/components/schemas/schemas__CollectionMetadata"
+            },
+            "title": "Collections",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "collections"
+        ],
+        "title": "CollectionListResponse",
+        "type": "object"
+      },
+      "CollectionScopedRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "CollectionScopedRequest",
+        "type": "object"
+      },
+      "CollectionSummary": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "CollectionSummary",
+        "type": "object"
+      },
+      "CollectionUpsertRequest": {
+        "description": "Get-or-create body: pass name plus optional collection_id (if omitted, id is derived from name).",
+        "properties": {
+          "collection_id": {
+            "default": "",
+            "description": "Stable slug; leave empty to derive from name (slugify)",
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "description": "Optional operator notes",
+            "title": "Description",
+            "type": "string"
+          },
+          "name": {
+            "description": "Human-readable collection title",
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "CollectionUpsertRequest",
+        "type": "object"
+      },
+      "CommunityReportsRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "CommunityReportsRequest",
+        "type": "object"
+      },
+      "CommunityReportsResponse": {
+        "description": "Fields for res_data-style API responses.",
+        "properties": {
+          "community_reports": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Community Reports",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "CommunityReportsResponse",
+        "type": "object"
+      },
+      "CompletionRequest": {
+        "properties": {
+          "messages": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "minItems": 1,
+            "title": "Messages",
+            "type": "array"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "provider": {
+            "description": "Provider alias: groq, ollama, openai, anthropic",
+            "title": "Provider",
+            "type": "string"
+          },
+          "reasoning_effort": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasoning Effort"
+          },
+          "response_format": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResponseFormatJsonObject"
+              },
+              {
+                "$ref": "#/components/schemas/ResponseFormatJsonSchema"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Format"
+          }
+        },
+        "required": [
+          "provider",
+          "messages"
+        ],
+        "title": "CompletionRequest",
+        "type": "object"
+      },
+      "CompletionResponse": {
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "parsed": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parsed"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "title": "CompletionResponse",
+        "type": "object"
+      },
+      "ContentListItem": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "image_caption": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Caption"
+          },
+          "image_footnote": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Footnote"
+          },
+          "img_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Img Path"
+          },
+          "latex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latex"
+          },
+          "page_idx": {
+            "default": 0,
+            "title": "Page Idx",
+            "type": "integer"
+          },
+          "table_body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Body"
+          },
+          "table_caption": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Caption"
+          },
+          "table_footnote": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Footnote"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "type": {
+            "description": "text, image, table, equation, or custom",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "ContentListItem",
+        "type": "object"
+      },
+      "ContextEvidenceItem": {
+        "properties": {
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "content_snippet": {
+            "title": "Content Snippet",
+            "type": "string"
+          },
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "section_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Label"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Title"
+          },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "title_summary": {
+            "title": "Title Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "document_id",
+          "chunk_id",
+          "timestamp",
+          "section_title",
+          "section_label",
+          "title_summary",
+          "content_snippet"
+        ],
+        "title": "ContextEvidenceItem",
+        "type": "object"
+      },
+      "ContextSummary": {
+        "properties": {
+          "chunk_count": {
+            "title": "Chunk Count",
+            "type": "integer"
+          },
+          "document_count": {
+            "title": "Document Count",
+            "type": "integer"
+          },
+          "event_count": {
+            "title": "Event Count",
+            "type": "integer"
+          },
+          "reference_count": {
+            "title": "Reference Count",
+            "type": "integer"
+          },
+          "table_count": {
+            "title": "Table Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "document_count",
+          "chunk_count",
+          "event_count",
+          "reference_count",
+          "table_count"
+        ],
+        "title": "ContextSummary",
+        "type": "object"
+      },
+      "ConvertResponse": {
+        "description": "Result of document-to-markdown conversion.",
+        "properties": {
+          "markdown": {
+            "description": "Converted markdown content",
+            "title": "Markdown",
+            "type": "string"
+          }
+        },
+        "required": [
+          "markdown"
+        ],
+        "title": "ConvertResponse",
+        "type": "object"
+      },
+      "CreateCollectionRequest": {
+        "properties": {
+          "collection_name": {
+            "minLength": 1,
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "minLength": 1,
+            "title": "Ontology Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id"
+        ],
+        "title": "CreateCollectionRequest",
+        "type": "object"
+      },
+      "CreateEventSupersessionRequest": {
+        "properties": {
+          "newer_event_id": {
+            "minLength": 1,
+            "title": "Newer Event Id",
+            "type": "string"
+          },
+          "older_event_id": {
+            "minLength": 1,
+            "title": "Older Event Id",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "newer_event_id",
+          "older_event_id"
+        ],
+        "title": "CreateEventSupersessionRequest",
+        "type": "object"
+      },
+      "DeleteFileRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "file_name": {
+            "title": "File Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "file_name"
+        ],
+        "title": "DeleteFileRequest",
+        "type": "object"
+      },
+      "EmbeddingDataItem": {
+        "properties": {
+          "embedding": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Embedding"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "object": {
+            "title": "Object",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "index",
+          "embedding"
+        ],
+        "title": "EmbeddingDataItem",
+        "type": "object"
+      },
+      "EmbeddingRequest": {
+        "properties": {
+          "dimensions": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimensions"
+          },
+          "encoding_format": {
+            "anyOf": [
+              {
+                "enum": [
+                  "float",
+                  "base64"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Encoding Format"
+          },
+          "input": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Input"
+          },
+          "input_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Input Type"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "user": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User"
+          }
+        },
+        "required": [
+          "provider",
+          "input"
+        ],
+        "title": "EmbeddingRequest",
+        "type": "object"
+      },
+      "EmbeddingResponse": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/EmbeddingDataItem"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "object": {
+            "title": "Object",
+            "type": "string"
+          },
+          "usage": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Usage"
+          }
+        },
+        "required": [
+          "object",
+          "model",
+          "data"
+        ],
+        "title": "EmbeddingResponse",
+        "type": "object"
+      },
+      "EntityCollectionConnection": {
+        "properties": {
+          "collection_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collection Name"
+          },
+          "entity_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Name"
+          },
+          "entity_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Type"
+          },
+          "mention_count": {
+            "default": 0,
+            "title": "Mention Count",
+            "type": "integer"
+          },
+          "observed_roles": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Observed Roles",
+            "type": "array"
+          }
+        },
+        "title": "EntityCollectionConnection",
+        "type": "object"
+      },
+      "EntityCollectionsResponse": {
+        "properties": {
+          "connections": {
+            "items": {
+              "$ref": "#/components/schemas/EntityCollectionConnection"
+            },
+            "title": "Connections",
+            "type": "array"
+          },
+          "entity_name": {
+            "title": "Entity Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity_name",
+          "connections"
+        ],
+        "title": "EntityCollectionsResponse",
+        "type": "object"
+      },
+      "EventSearchHit": {
+        "properties": {
+          "canonical_event": {
+            "title": "Canonical Event",
+            "type": "string"
+          },
+          "canonical_subevent": {
+            "title": "Canonical Subevent",
+            "type": "string"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "direction": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direction"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Time"
+          },
+          "magnitude": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Magnitude"
+          },
+          "normalized_subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalized Subtype"
+          },
+          "probability": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probability"
+          },
+          "source_snapshot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Snapshot Id"
+          },
+          "superseded_by_event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded By Event Id"
+          },
+          "supersession_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersession Reason"
+          }
+        },
+        "required": [
+          "event_id",
+          "collection_name",
+          "canonical_event",
+          "canonical_subevent"
+        ],
+        "title": "EventSearchHit",
+        "type": "object"
+      },
+      "EventSearchResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/EventSearchHit"
+            },
+            "title": "Hits",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "hits"
+        ],
+        "title": "EventSearchResponse",
+        "type": "object"
+      },
+      "EventSupersessionCreatedResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "newer_event_id": {
+            "title": "Newer Event Id",
+            "type": "string"
+          },
+          "older_event_id": {
+            "title": "Older Event Id",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "collection_name",
+          "newer_event_id",
+          "older_event_id"
+        ],
+        "title": "EventSupersessionCreatedResponse",
+        "type": "object"
+      },
+      "EventSupersessionDetailResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "superseded_by_event_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Superseded By Event Ids",
+            "type": "array"
+          },
+          "supersedes_event_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Supersedes Event Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "event_id"
+        ],
+        "title": "EventSupersessionDetailResponse",
+        "type": "object"
+      },
+      "ExtracGraphDataResponse": {
+        "description": "Fields for res_data-style API responses.",
+        "properties": {
+          "community_reports": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Community Reports",
+            "type": "array"
+          },
+          "graph_chunks": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Graph Chunks",
+            "type": "array"
+          },
+          "graph_vocabulary_set": {
+            "default": [],
+            "items": {},
+            "title": "Graph Vocabulary Set",
+            "type": "array",
+            "uniqueItems": true
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "ExtracGraphDataResponse",
+        "type": "object"
+      },
+      "GetCollectionByIdRequest": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "GetCollectionByIdRequest",
+        "type": "object"
+      },
+      "GetGraphRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "kb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kb Id"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "GetGraphRequest",
+        "type": "object"
+      },
+      "GraphDataResponse": {
+        "description": "Fields for res_data-style API responses.",
+        "properties": {
+          "graph_data": {
+            "additionalProperties": true,
+            "title": "Graph Data",
+            "type": "object"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "graph_data"
+        ],
+        "title": "GraphDataResponse",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "ImageItem": {
+        "description": "One extracted image block.",
+        "properties": {
+          "image_base64": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Base64-encoded image when in payload",
+            "title": "Image Base64"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "description": "Element metadata",
+            "title": "Metadata",
+            "type": "object"
+          }
+        },
+        "title": "ImageItem",
+        "type": "object"
+      },
+      "ImpactPriorResponse": {
+        "properties": {
+          "canonical_event": {
+            "title": "Canonical Event",
+            "type": "string"
+          },
+          "canonical_subevent": {
+            "title": "Canonical Subevent",
+            "type": "string"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          },
+          "ontology_version": {
+            "title": "Ontology Version",
+            "type": "string"
+          },
+          "prior": {
+            "additionalProperties": true,
+            "title": "Prior",
+            "type": "object"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "ontology_version",
+          "canonical_event",
+          "canonical_subevent",
+          "prior"
+        ],
+        "title": "ImpactPriorResponse",
+        "type": "object"
+      },
+      "IngestBatchRequest": {
+        "properties": {
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/IngestChunk"
+            },
+            "minItems": 1,
+            "title": "Chunks",
+            "type": "array"
+          },
+          "collection_name": {
+            "minLength": 1,
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "minLength": 1,
+            "title": "Ontology Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "chunks"
+        ],
+        "title": "IngestBatchRequest",
+        "type": "object"
+      },
+      "IngestBatchResponse": {
+        "properties": {
+          "accepted_chunks": {
+            "title": "Accepted Chunks",
+            "type": "integer"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "accepted_chunks"
+        ],
+        "title": "IngestBatchResponse",
+        "type": "object"
+      },
+      "IngestChunk": {
+        "properties": {
+          "bundle_id": {
+            "description": "Semantic bundle id",
+            "title": "Bundle Id",
+            "type": "string"
+          },
+          "canonical_event": {
+            "description": "Top-level ontology event type",
+            "title": "Canonical Event",
+            "type": "string"
+          },
+          "canonical_subevent": {
+            "description": "Ontology subevent type",
+            "title": "Canonical Subevent",
+            "type": "string"
+          },
+          "chunk_id": {
+            "description": "Stable chunk identifier",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "content": {
+            "description": "Chunk text, table, or image description",
+            "title": "Content",
+            "type": "string"
+          },
+          "doc_id": {
+            "description": "Document id",
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "next_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Next chunk id",
+            "title": "Next Chunk"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Source page when available",
+            "title": "Page"
+          },
+          "prev_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Previous chunk id",
+            "title": "Prev Chunk"
+          },
+          "publish_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Document publish date if provided",
+            "title": "Publish Date"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Nearest section heading",
+            "title": "Section Title"
+          },
+          "title_summary": {
+            "default": "",
+            "description": "LLM section summary",
+            "title": "Title Summary",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChunkType",
+            "description": "One of text, table, image"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "content",
+          "type",
+          "doc_id",
+          "bundle_id",
+          "canonical_event",
+          "canonical_subevent"
+        ],
+        "title": "IngestChunk",
+        "type": "object"
+      },
+      "IngestChunkItem": {
+        "properties": {
+          "bundle_id": {
+            "description": "Semantic bundle id",
+            "title": "Bundle Id",
+            "type": "string"
+          },
+          "canonical_event": {
+            "description": "Ontology level-1 event",
+            "title": "Canonical Event",
+            "type": "string"
+          },
+          "canonical_subevent": {
+            "description": "Ontology level-2 subevent",
+            "title": "Canonical Subevent",
+            "type": "string"
+          },
+          "chunk_id": {
+            "description": "Stable chunk identifier",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "content": {
+            "description": "Chunk text, table, or image description",
+            "title": "Content",
+            "type": "string"
+          },
+          "doc_id": {
+            "description": "Document id",
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "next_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Next chunk id",
+            "title": "Next Chunk"
+          },
+          "normalized_subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Level-3 subtype; derived server-side if omitted",
+            "title": "Normalized Subtype"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Source page when available",
+            "title": "Page"
+          },
+          "prev_chunk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Previous chunk id",
+            "title": "Prev Chunk"
+          },
+          "publish_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Document publish date if provided",
+            "title": "Publish Date"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Nearest section heading",
+            "title": "Section Title"
+          },
+          "title_summary": {
+            "default": "",
+            "description": "LLM section summary",
+            "title": "Title Summary",
+            "type": "string"
+          },
+          "type": {
+            "description": "One of text, table, image",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "content",
+          "type",
+          "doc_id",
+          "bundle_id",
+          "canonical_event",
+          "canonical_subevent"
+        ],
+        "title": "IngestChunkItem",
+        "type": "object"
+      },
+      "IngestChunksRequest": {
+        "properties": {
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/ChunkInput"
+            },
+            "title": "Chunks",
+            "type": "array"
+          },
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "file_name": {
+            "title": "File Name",
+            "type": "string"
+          },
+          "schema": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schema"
+          },
+          "temperature": {
+            "default": 0.001,
+            "title": "Temperature",
+            "type": "number"
+          }
+        },
+        "required": [
+          "collection_id",
+          "chunks",
+          "file_name"
+        ],
+        "title": "IngestChunksRequest",
+        "type": "object"
+      },
+      "IngestJobCreateResponse": {
+        "properties": {
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "poll_url": {
+            "title": "Poll Url",
+            "type": "string"
+          },
+          "sse_url": {
+            "title": "Sse Url",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/JobState",
+            "default": "pending"
+          }
+        },
+        "required": [
+          "job_id",
+          "poll_url",
+          "sse_url"
+        ],
+        "title": "IngestJobCreateResponse",
+        "type": "object"
+      },
+      "IngestJobStatus": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "result_summary": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Summary"
+          },
+          "state": {
+            "$ref": "#/components/schemas/JobState"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "state",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "IngestJobStatus",
+        "type": "object"
+      },
+      "IngestPayload": {
+        "description": "Batch ingest: all chunks must share the same doc_id + publish_date grouping key.",
+        "properties": {
+          "chunks": {
+            "items": {
+              "$ref": "#/components/schemas/IngestChunkItem"
+            },
+            "minItems": 1,
+            "title": "Chunks",
+            "type": "array"
+          },
+          "collection_id": {
+            "description": "Graph partition id (required). Documents/chunks/events are ingested in this collection context",
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotency Key"
+          },
+          "ontology_id": {
+            "description": "Ontology file id (e.g. company_data)",
+            "title": "Ontology Id",
+            "type": "string"
+          },
+          "webhook_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "POST JSON job status on completion (optional)",
+            "title": "Webhook Url"
+          }
+        },
+        "required": [
+          "ontology_id",
+          "collection_id",
+          "chunks"
+        ],
+        "title": "IngestPayload",
+        "type": "object"
+      },
+      "IngestProcessResponse": {
+        "properties": {
+          "accepted_chunks": {
+            "title": "Accepted Chunks",
+            "type": "integer"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          },
+          "persisted_snapshots": {
+            "default": 0,
+            "title": "Persisted Snapshots",
+            "type": "integer"
+          },
+          "processed": {
+            "items": {
+              "$ref": "#/components/schemas/ProcessedChunkSummary"
+            },
+            "title": "Processed",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "accepted_chunks",
+          "processed"
+        ],
+        "title": "IngestProcessResponse",
+        "type": "object"
+      },
+      "InsertContentRequest": {
+        "properties": {
+          "content_list": {
+            "description": "Pre-parsed content items",
+            "items": {
+              "$ref": "#/components/schemas/ContentListItem"
+            },
+            "title": "Content List",
+            "type": "array"
+          },
+          "doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Id"
+          },
+          "file_path": {
+            "default": "unknown_document",
+            "description": "Reference name for citations",
+            "title": "File Path",
+            "type": "string"
+          },
+          "split_by_character": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split By Character"
+          },
+          "split_by_character_only": {
+            "default": false,
+            "title": "Split By Character Only",
+            "type": "boolean"
+          },
+          "workspace": {
+            "default": "default",
+            "description": "Tenant/workspace id",
+            "title": "Workspace",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content_list"
+        ],
+        "title": "InsertContentRequest",
+        "type": "object"
+      },
+      "JobState": {
+        "enum": [
+          "pending",
+          "running",
+          "completed",
+          "failed"
+        ],
+        "title": "JobState",
+        "type": "string"
+      },
+      "JsonSchemaPayload": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema": {
+            "additionalProperties": true,
+            "title": "Schema",
+            "type": "object"
+          },
+          "strict": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strict"
+          }
+        },
+        "required": [
+          "name",
+          "schema"
+        ],
+        "title": "JsonSchemaPayload",
+        "type": "object"
+      },
+      "ModelsResponse": {
+        "properties": {
+          "default_model": {
+            "title": "Default Model",
+            "type": "string"
+          },
+          "fallback_model": {
+            "title": "Fallback Model",
+            "type": "string"
+          },
+          "models": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Models",
+            "type": "array"
+          }
+        },
+        "required": [
+          "default_model",
+          "fallback_model",
+          "models"
+        ],
+        "title": "ModelsResponse",
+        "type": "object"
+      },
+      "MultiStepRagRequest": {
+        "properties": {
+          "max_steps": {
+            "default": 10,
+            "maximum": 25.0,
+            "minimum": 1.0,
+            "title": "Max Steps",
+            "type": "integer"
+          },
+          "question": {
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "MultiStepRagRequest",
+        "type": "object"
+      },
+      "MultiStepRagResponse": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "initial_plan": {
+            "title": "Initial Plan",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Steps",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "question",
+          "initial_plan",
+          "answer"
+        ],
+        "title": "MultiStepRagResponse",
+        "type": "object"
+      },
+      "MultimodalItem": {
+        "properties": {
+          "equation_caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Equation Caption"
+          },
+          "image_caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Caption"
+          },
+          "image_footnote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Footnote"
+          },
+          "img_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Img Path"
+          },
+          "latex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latex"
+          },
+          "table_body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Body"
+          },
+          "table_caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Caption"
+          },
+          "table_data": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Data"
+          },
+          "table_footnote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table Footnote"
+          },
+          "type": {
+            "description": "One of: table, equation, image",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "MultimodalItem",
+        "type": "object"
+      },
+      "OpenAIChatCompletionChoice": {
+        "properties": {
+          "finish_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "stop",
+                  "length",
+                  "tool_calls",
+                  "content_filter",
+                  "function_call"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "stop",
+            "title": "Finish Reason"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "message": {
+            "$ref": "#/components/schemas/OpenAIChatCompletionMessage"
+          }
+        },
+        "required": [
+          "index",
+          "message"
+        ],
+        "title": "OpenAIChatCompletionChoice",
+        "type": "object"
+      },
+      "OpenAIChatCompletionMessage": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "role": {
+            "const": "assistant",
+            "default": "assistant",
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "title": "OpenAIChatCompletionMessage",
+        "type": "object"
+      },
+      "OpenAIChatCompletionRequest": {
+        "properties": {
+          "frequency_penalty": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": -2.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Frequency Penalty"
+          },
+          "max_completion_tokens": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Completion Tokens"
+          },
+          "max_tokens": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Tokens"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/OpenAIChatMessage"
+            },
+            "minItems": 1,
+            "title": "Messages",
+            "type": "array"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "n": {
+            "anyOf": [
+              {
+                "maximum": 128.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N"
+          },
+          "presence_penalty": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": -2.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Presence Penalty"
+          },
+          "reasoning_effort": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasoning Effort"
+          },
+          "response_format": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OpenAIResponseFormat"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stop": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stop"
+          },
+          "stream": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": false,
+            "title": "Stream"
+          },
+          "temperature": {
+            "anyOf": [
+              {
+                "maximum": 2.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temperature"
+          },
+          "top_p": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top P"
+          },
+          "user": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User"
+          }
+        },
+        "required": [
+          "model",
+          "messages"
+        ],
+        "title": "OpenAIChatCompletionRequest",
+        "type": "object"
+      },
+      "OpenAIChatCompletionResponse": {
+        "properties": {
+          "choices": {
+            "items": {
+              "$ref": "#/components/schemas/OpenAIChatCompletionChoice"
+            },
+            "title": "Choices",
+            "type": "array"
+          },
+          "created": {
+            "title": "Created",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "object": {
+            "const": "chat.completion",
+            "default": "chat.completion",
+            "title": "Object",
+            "type": "string"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/OpenAICompletionUsage"
+          }
+        },
+        "required": [
+          "id",
+          "created",
+          "model",
+          "choices",
+          "usage"
+        ],
+        "title": "OpenAIChatCompletionResponse",
+        "type": "object"
+      },
+      "OpenAIChatMessage": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "role": {
+            "enum": [
+              "system",
+              "user",
+              "assistant",
+              "tool",
+              "developer"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "tool_call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tool Call Id"
+          },
+          "tool_calls": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tool Calls"
+          }
+        },
+        "required": [
+          "role"
+        ],
+        "title": "OpenAIChatMessage",
+        "type": "object"
+      },
+      "OpenAICompletionUsage": {
+        "properties": {
+          "completion_tokens": {
+            "default": 0,
+            "title": "Completion Tokens",
+            "type": "integer"
+          },
+          "prompt_tokens": {
+            "default": 0,
+            "title": "Prompt Tokens",
+            "type": "integer"
+          },
+          "total_tokens": {
+            "default": 0,
+            "title": "Total Tokens",
+            "type": "integer"
+          }
+        },
+        "title": "OpenAICompletionUsage",
+        "type": "object"
+      },
+      "OpenAIEmbeddingListResponse": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/OpenAIEmbeddingObject"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "object": {
+            "const": "list",
+            "default": "list",
+            "title": "Object",
+            "type": "string"
+          },
+          "usage": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Usage",
+            "type": "object"
+          }
+        },
+        "required": [
+          "model",
+          "data",
+          "usage"
+        ],
+        "title": "OpenAIEmbeddingListResponse",
+        "type": "object"
+      },
+      "OpenAIEmbeddingObject": {
+        "properties": {
+          "embedding": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Embedding"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "object": {
+            "const": "embedding",
+            "default": "embedding",
+            "title": "Object",
+            "type": "string"
+          }
+        },
+        "required": [
+          "index",
+          "embedding"
+        ],
+        "title": "OpenAIEmbeddingObject",
+        "type": "object"
+      },
+      "OpenAIEmbeddingRequest": {
+        "properties": {
+          "dimensions": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimensions"
+          },
+          "encoding_format": {
+            "anyOf": [
+              {
+                "enum": [
+                  "float",
+                  "base64"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Encoding Format"
+          },
+          "input": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Input"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "user": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User"
+          }
+        },
+        "required": [
+          "model",
+          "input"
+        ],
+        "title": "OpenAIEmbeddingRequest",
+        "type": "object"
+      },
+      "OpenAIModelCard": {
+        "properties": {
+          "created": {
+            "title": "Created",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "object": {
+            "const": "model",
+            "default": "model",
+            "title": "Object",
+            "type": "string"
+          },
+          "owned_by": {
+            "title": "Owned By",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "created",
+          "owned_by"
+        ],
+        "title": "OpenAIModelCard",
+        "type": "object"
+      },
+      "OpenAIModelListResponse": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/OpenAIModelCard"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "object": {
+            "const": "list",
+            "default": "list",
+            "title": "Object",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "OpenAIModelListResponse",
+        "type": "object"
+      },
+      "OpenAIResponseFormat": {
+        "properties": {
+          "json_schema": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OpenAIResponseFormatJsonSchema"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "enum": [
+              "text",
+              "json_object",
+              "json_schema"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "OpenAIResponseFormat",
+        "type": "object"
+      },
+      "OpenAIResponseFormatJsonSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "schema": {
+            "additionalProperties": true,
+            "title": "Schema",
+            "type": "object"
+          },
+          "strict": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strict"
+          }
+        },
+        "required": [
+          "name",
+          "schema"
+        ],
+        "title": "OpenAIResponseFormatJsonSchema",
+        "type": "object"
+      },
+      "PdfToMarkdownResponse": {
+        "description": "Result of PDF-to-markdown conversion.",
+        "properties": {
+          "markdown": {
+            "description": "Converted markdown content",
+            "title": "Markdown",
+            "type": "string"
+          }
+        },
+        "required": [
+          "markdown"
+        ],
+        "title": "PdfToMarkdownResponse",
+        "type": "object"
+      },
+      "ProcessFromUrlResponse": {
+        "description": "Result of process-from-url: tables and images.",
+        "properties": {
+          "extract_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Dir path if images saved to disk",
+            "title": "Extract Output Dir"
+          },
+          "images": {
+            "description": "Extracted images",
+            "items": {
+              "$ref": "#/components/schemas/ImageItem"
+            },
+            "title": "Images",
+            "type": "array"
+          },
+          "tables": {
+            "description": "Extracted tables",
+            "items": {
+              "$ref": "#/components/schemas/TableItem"
+            },
+            "title": "Tables",
+            "type": "array"
+          }
+        },
+        "required": [
+          "tables",
+          "images"
+        ],
+        "title": "ProcessFromUrlResponse",
+        "type": "object"
+      },
+      "ProcessedChunkSummary": {
+        "properties": {
+          "canonical_event": {
+            "title": "Canonical Event",
+            "type": "string"
+          },
+          "canonical_subevent": {
+            "title": "Canonical Subevent",
+            "type": "string"
+          },
+          "causality_reason": {
+            "title": "Causality Reason",
+            "type": "string"
+          },
+          "causality_target": {
+            "title": "Causality Target",
+            "type": "string"
+          },
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "decay_half_life_days": {
+            "title": "Decay Half Life Days",
+            "type": "integer"
+          },
+          "embedding_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Model"
+          },
+          "embedding_vector_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Vector Size"
+          },
+          "entities": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Entities",
+            "type": "array"
+          },
+          "extracted_events": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Extracted Events",
+            "type": "array"
+          },
+          "extraction_text": {
+            "title": "Extraction Text",
+            "type": "string"
+          },
+          "impact_direction": {
+            "title": "Impact Direction",
+            "type": "string"
+          },
+          "impact_magnitude": {
+            "title": "Impact Magnitude",
+            "type": "string"
+          },
+          "impact_probability": {
+            "title": "Impact Probability",
+            "type": "number"
+          },
+          "medium_term_return_bps": {
+            "title": "Medium Term Return Bps",
+            "type": "integer"
+          },
+          "short_term_return_bps": {
+            "title": "Short Term Return Bps",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "canonical_event",
+          "canonical_subevent",
+          "extraction_text",
+          "impact_direction",
+          "impact_magnitude",
+          "impact_probability",
+          "short_term_return_bps",
+          "medium_term_return_bps",
+          "decay_half_life_days",
+          "causality_target",
+          "causality_reason"
+        ],
+        "title": "ProcessedChunkSummary",
+        "type": "object"
+      },
+      "QueryAnswer": {
+        "properties": {
+          "confidence": {
+            "title": "Confidence",
+            "type": "number"
+          },
+          "context_summary": {
+            "title": "Context Summary",
+            "type": "string"
+          },
+          "direct_answer": {
+            "title": "Direct Answer",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "supporting_facts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supporting Facts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "question",
+          "direct_answer",
+          "confidence",
+          "context_summary"
+        ],
+        "title": "QueryAnswer",
+        "type": "object"
+      },
+      "QueryContext": {
+        "properties": {
+          "documents": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Documents",
+            "type": "array"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/ContextEvidenceItem"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "reference_traces": {
+            "items": {
+              "$ref": "#/components/schemas/ReferenceTraceItem"
+            },
+            "title": "Reference Traces",
+            "type": "array"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ContextSummary"
+          },
+          "table_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/TableEvidenceItem"
+            },
+            "title": "Table Evidence",
+            "type": "array"
+          }
+        },
+        "required": [
+          "summary"
+        ],
+        "title": "QueryContext",
+        "type": "object"
+      },
+      "QueryMultimodalRequest": {
+        "properties": {
+          "mode": {
+            "default": "hybrid",
+            "description": "Query mode",
+            "title": "Mode",
+            "type": "string"
+          },
+          "multimodal_content": {
+            "description": "Tables, equations, or image refs",
+            "items": {
+              "$ref": "#/components/schemas/MultimodalItem"
+            },
+            "title": "Multimodal Content",
+            "type": "array"
+          },
+          "query": {
+            "description": "Question in context of the given multimodal content",
+            "title": "Query",
+            "type": "string"
+          },
+          "workspace": {
+            "default": "default",
+            "description": "Tenant/workspace id",
+            "title": "Workspace",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query",
+          "multimodal_content"
+        ],
+        "title": "QueryMultimodalRequest",
+        "type": "object"
+      },
+      "QueryResult": {
+        "properties": {
+          "answer": {
+            "$ref": "#/components/schemas/QueryAnswer"
+          },
+          "context": {
+            "$ref": "#/components/schemas/QueryContext"
+          },
+          "execution": {
+            "additionalProperties": true,
+            "title": "Execution",
+            "type": "object"
+          },
+          "parsed_query": {
+            "additionalProperties": true,
+            "title": "Parsed Query",
+            "type": "object"
+          },
+          "plan": {
+            "additionalProperties": true,
+            "title": "Plan",
+            "type": "object"
+          }
+        },
+        "required": [
+          "parsed_query",
+          "plan",
+          "execution",
+          "context",
+          "answer"
+        ],
+        "title": "QueryResult",
+        "type": "object"
+      },
+      "RagAnswerRequest": {
+        "properties": {
+          "question": {
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "retrieval_mode": {
+            "default": "lexical",
+            "enum": [
+              "lexical",
+              "vector"
+            ],
+            "title": "Retrieval Mode",
+            "type": "string"
+          },
+          "top_k": {
+            "default": 5,
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "RagAnswerRequest",
+        "type": "object"
+      },
+      "RagAnswerResponse": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RagSourceRef"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "collection_name",
+          "question",
+          "answer",
+          "sources"
+        ],
+        "title": "RagAnswerResponse",
+        "type": "object"
+      },
+      "RagSourceRef": {
+        "properties": {
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Id"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          }
+        },
+        "title": "RagSourceRef",
+        "type": "object"
+      },
+      "ReferenceTraceItem": {
+        "properties": {
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "reference_text": {
+            "title": "Reference Text",
+            "type": "string"
+          },
+          "reference_type": {
+            "title": "Reference Type",
+            "type": "string"
+          },
+          "resolved": {
+            "title": "Resolved",
+            "type": "boolean"
+          },
+          "source_chunk_id": {
+            "title": "Source Chunk Id",
+            "type": "string"
+          },
+          "target_chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Chunk Id"
+          },
+          "target_document_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Document Id"
+          },
+          "target_label": {
+            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_chunk_id",
+          "reference_text",
+          "reference_type",
+          "target_label",
+          "resolved",
+          "reason"
+        ],
+        "title": "ReferenceTraceItem",
+        "type": "object"
+      },
+      "RequestResponse": {
+        "description": "Fields for res_data-style API responses.",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ],
+        "title": "RequestResponse",
+        "type": "object"
+      },
+      "ResponseFormatJsonObject": {
+        "properties": {
+          "type": {
+            "const": "json_object",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "ResponseFormatJsonObject",
+        "type": "object"
+      },
+      "ResponseFormatJsonSchema": {
+        "properties": {
+          "json_schema": {
+            "$ref": "#/components/schemas/JsonSchemaPayload"
+          },
+          "type": {
+            "const": "json_schema",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "json_schema"
+        ],
+        "title": "ResponseFormatJsonSchema",
+        "type": "object"
+      },
+      "RetrievalQuery": {
+        "properties": {
+          "collection_id": {
+            "description": "Required collection partition id",
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict context to a document",
+            "title": "Doc Id"
+          },
+          "publish_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "ISO date string matching Document.publish_date",
+            "title": "Publish Date"
+          },
+          "question": {
+            "description": "Natural language question for multi-hop agent",
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "collection_id"
+        ],
+        "title": "RetrievalQuery",
+        "type": "object"
+      },
+      "RetrievalResponse": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "tool_trace": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Tool Trace",
+            "type": "array"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "title": "RetrievalResponse",
+        "type": "object"
+      },
+      "RetrieveRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "top_k": {
+            "default": 10,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "collection_id",
+          "query"
+        ],
+        "title": "RetrieveRequest",
+        "type": "object"
+      },
+      "RetrieveResponse": {
+        "properties": {
+          "chunk_evidence": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Chunk Evidence",
+            "type": "array"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "query",
+          "collection_id",
+          "evidence"
+        ],
+        "title": "RetrieveResponse",
+        "type": "object"
+      },
+      "SnapshotSearchHit": {
+        "properties": {
+          "bundle_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle Id"
+          },
+          "canonical_event": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Event"
+          },
+          "canonical_subevent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Subevent"
+          },
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "doc_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Id"
+          },
+          "extraction_text": {
+            "default": "",
+            "title": "Extraction Text",
+            "type": "string"
+          },
+          "ingested_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingested At"
+          },
+          "similarity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          }
+        },
+        "title": "SnapshotSearchHit",
+        "type": "object"
+      },
+      "SnapshotSearchResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/SnapshotSearchHit"
+            },
+            "title": "Hits",
+            "type": "array"
+          },
+          "mode": {
+            "default": "lexical",
+            "enum": [
+              "lexical",
+              "vector"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "query",
+          "hits"
+        ],
+        "title": "SnapshotSearchResponse",
+        "type": "object"
+      },
+      "TableEvidenceItem": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "source_chunk_id": {
+            "title": "Source Chunk Id",
+            "type": "string"
+          },
+          "target_chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Chunk Id"
+          },
+          "target_label": {
+            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "document_id",
+          "source_chunk_id",
+          "target_chunk_id",
+          "target_label"
+        ],
+        "title": "TableEvidenceItem",
+        "type": "object"
+      },
+      "TableItem": {
+        "description": "One extracted table.",
+        "properties": {
+          "metadata": {
+            "additionalProperties": true,
+            "description": "Element metadata",
+            "title": "Metadata",
+            "type": "object"
+          },
+          "text": {
+            "description": "Plain-text table content",
+            "title": "Text",
+            "type": "string"
+          },
+          "text_as_html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Table as HTML when available",
+            "title": "Text As Html"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TableItem",
+        "type": "object"
+      },
+      "TestPostRequest": {
+        "properties": {
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          }
+        },
+        "title": "TestPostRequest",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "WorkspaceConfigPayload": {
+        "additionalProperties": false,
+        "description": "Allowed workspace config keys for POST /config/{workspace_id}. Extra keys are forbidden.",
+        "properties": {
+          "chunk_top_k": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Top K"
+          },
+          "cosine_better_than_threshold": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cosine Better Than Threshold"
+          },
+          "doc_status_storage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doc Status Storage"
+          },
+          "enable_equation_processing": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enable Equation Processing"
+          },
+          "enable_image_processing": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enable Image Processing"
+          },
+          "enable_table_processing": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enable Table Processing"
+          },
+          "graph_storage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Graph Storage"
+          },
+          "kv_storage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kv Storage"
+          },
+          "max_entity_tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Entity Tokens"
+          },
+          "max_relation_tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Relation Tokens"
+          },
+          "max_total_tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Total Tokens"
+          },
+          "parse_method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parse Method"
+          },
+          "parser": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parser"
+          },
+          "top_k": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top K"
+          },
+          "vector_db_storage_cls_kwargs": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vector Db Storage Cls Kwargs"
+          },
+          "vector_storage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vector Storage"
+          },
+          "working_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Working Dir"
+          }
+        },
+        "title": "WorkspaceConfigPayload",
+        "type": "object"
+      },
+      "XbrlToMarkdownResponse": {
+        "description": "Result of XBRL-to-markdown conversion.",
+        "properties": {
+          "markdown": {
+            "description": "Converted markdown content",
+            "title": "Markdown",
+            "type": "string"
+          }
+        },
+        "required": [
+          "markdown"
+        ],
+        "title": "XbrlToMarkdownResponse",
+        "type": "object"
+      },
+      "app__schemas__QueryRequest": {
+        "properties": {
+          "mode": {
+            "default": "hybrid",
+            "description": "Query mode: local, global, hybrid, naive, mix, bypass",
+            "title": "Mode",
+            "type": "string"
+          },
+          "query": {
+            "description": "Natural language question",
+            "title": "Query",
+            "type": "string"
+          },
+          "system_prompt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "System Prompt"
+          },
+          "vlm_enhanced": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Use VLM for images in context",
+            "title": "Vlm Enhanced"
+          },
+          "workspace": {
+            "default": "default",
+            "description": "Tenant/workspace id for data isolation",
+            "title": "Workspace",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "title": "QueryRequest",
+        "type": "object"
+      },
+      "app__schemas__QueryResponse": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "title": "QueryResponse",
+        "type": "object"
+      },
+      "raqe__models__collection__CollectionMetadata": {
+        "properties": {
+          "chunk_count": {
+            "title": "Chunk Count",
+            "type": "integer"
+          },
+          "document_count": {
+            "title": "Document Count",
+            "type": "integer"
+          },
+          "earliest_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Earliest Timestamp"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "latest_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Timestamp"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "document_count",
+          "chunk_count"
+        ],
+        "title": "CollectionMetadata",
+        "type": "object"
+      },
+      "raqe__models__collection__GetOrCreateCollectionRequest": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "GetOrCreateCollectionRequest",
+        "type": "object"
+      },
+      "raqe__models__query_request__QueryRequest": {
+        "properties": {
+          "collection": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collection"
+          },
+          "question": {
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "section_hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Hint"
+          },
+          "strict_reference_resolution": {
+            "default": false,
+            "title": "Strict Reference Resolution",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "QueryRequest",
+        "type": "object"
+      },
+      "schemas__CollectionMetadata": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "CollectionMetadata",
+        "type": "object"
+      },
+      "schemas__CollectionResponse": {
+        "properties": {
+          "collection": {
+            "$ref": "#/components/schemas/schemas__CollectionMetadata"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "collection"
+        ],
+        "title": "CollectionResponse",
+        "type": "object"
+      },
+      "schemas__GetOrCreateCollectionRequest": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "title": "Description",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "GetOrCreateCollectionRequest",
+        "type": "object"
+      },
+      "schemas__QueryRequest": {
+        "properties": {
+          "client_id": {
+            "default": "default",
+            "title": "Client Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "temperature": {
+            "default": 0.001,
+            "title": "Temperature",
+            "type": "number"
+          },
+          "top_k": {
+            "default": 10,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "collection_id",
+          "question"
+        ],
+        "title": "QueryRequest",
+        "type": "object"
+      },
+      "schemas__QueryResponse": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "chunk_evidence": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Chunk Evidence",
+            "type": "array"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "question",
+          "collection_id",
+          "answer",
+          "evidence"
+        ],
+        "title": "QueryResponse",
+        "type": "object"
+      },
+      "temporal_graph__models__api__CollectionDetailResponse": {
+        "description": "Collection plus aggregate counts for documents attached under this partition.",
+        "properties": {
+          "chunk_count": {
+            "default": 0,
+            "title": "Chunk Count",
+            "type": "integer"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "document_count": {
+            "default": 0,
+            "title": "Document Count",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "statement_event_count": {
+            "default": 0,
+            "title": "Statement Event Count",
+            "type": "integer"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "required": [
+          "collection_id",
+          "name",
+          "description"
+        ],
+        "title": "CollectionDetailResponse",
+        "type": "object"
+      },
+      "temporal_graph__models__api__CollectionResponse": {
+        "description": "Collection metadata after upsert.",
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "created": {
+            "default": false,
+            "description": "True if this request created the node (best-effort; see implementation)",
+            "title": "Created",
+            "type": "boolean"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "name",
+          "description"
+        ],
+        "title": "CollectionResponse",
+        "type": "object"
+      },
+      "temporial_graph_rag__api__constants__CollectionDetailResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          },
+          "ontology_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ontology Version"
+          },
+          "registry_backend": {
+            "title": "Registry Backend",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id",
+          "registry_backend"
+        ],
+        "title": "CollectionDetailResponse",
+        "type": "object"
+      },
+      "temporial_graph_rag__api__constants__CollectionResponse": {
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "ontology_id": {
+            "title": "Ontology Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_name",
+          "ontology_id"
+        ],
+        "title": "CollectionResponse",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "OpenAPI slice for `/temporal-graph-openai` routes on the unified API. Generated from unified_api; use openapi.json for the full contract.",
+    "title": "Unified API — temporal-graph-openai",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/temporal-graph-openai/health": {
+      "get": {
+        "operationId": "health_temporal_graph_openai_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "temporal-graph-openai"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/collections": {
+      "post": {
+        "description": "Get or create a collection by id (and update name/description).",
+        "operationId": "upsert_collection_temporal_graph_openai_v1_collections_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/temporal_graph__models__api__CollectionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upsert Collection",
+        "tags": [
+          "temporal-graph-openai",
+          "collections"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/collections/{collection_id}": {
+      "get": {
+        "description": "Return collection metadata and document/chunk/event counts.",
+        "operationId": "get_collection_temporal_graph_openai_v1_collections__collection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/temporal_graph__models__api__CollectionDetailResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Collection",
+        "tags": [
+          "temporal-graph-openai",
+          "collections"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/ingest/jobs": {
+      "post": {
+        "operationId": "create_ingest_job_temporal_graph_openai_v1_ingest_jobs_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestJobCreateResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "detail": "Document (DOC123, 2025-01-01) already belongs to collection 'a', cannot ingest into 'b'"
+                }
+              }
+            },
+            "description": "Document already exists in a different collection"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Ingest Job",
+        "tags": [
+          "temporal-graph-openai",
+          "ingest"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/ingest/jobs/{job_id}": {
+      "get": {
+        "operationId": "get_ingest_job_temporal_graph_openai_v1_ingest_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestJobStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Ingest Job",
+        "tags": [
+          "temporal-graph-openai",
+          "ingest"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/ingest/jobs/{job_id}/stream": {
+      "get": {
+        "operationId": "ingest_job_stream_temporal_graph_openai_v1_ingest_jobs__job_id__stream_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ingest Job Stream",
+        "tags": [
+          "temporal-graph-openai",
+          "ingest"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/ontologies": {
+      "get": {
+        "operationId": "ontologies_temporal_graph_openai_v1_ontologies_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "title": "Response Ontologies Temporal Graph Openai V1 Ontologies Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Ontologies",
+        "tags": [
+          "temporal-graph-openai",
+          "ingest"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/retrieve": {
+      "post": {
+        "operationId": "retrieve_temporal_graph_openai_v1_retrieve_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetrievalQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrievalResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve",
+        "tags": [
+          "temporal-graph-openai",
+          "retrieve"
+        ]
+      }
+    },
+    "/temporal-graph-openai/v1/retrieve/agent": {
+      "post": {
+        "description": "Lightweight multi-hop: iterative neighborhood expansion + synthesis (v1).",
+        "operationId": "retrieve_multi_hop_temporal_graph_openai_v1_retrieve_agent_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetrievalQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrievalResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Retrieve Multi Hop",
+        "tags": [
+          "temporal-graph-openai",
+          "retrieve"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Local development",
+      "url": "http://127.0.0.1:8000"
+    },
+    {
+      "description": "Local development (localhost)",
+      "url": "http://localhost:8000"
+    },
+    {
+      "description": "Docker Compose network",
+      "url": "http://unified_api:8000"
+    }
+  ]
+}

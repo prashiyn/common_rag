@@ -1,0 +1,3350 @@
+openapi: 3.1.0
+info:
+  title: Unified API — ra-literag
+  description: OpenAPI slice for `/ra-literag` routes on the unified API. Generated
+    from unified_api; use openapi.json for the full contract.
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:8000
+  description: Local development
+- url: http://localhost:8000
+  description: Local development (localhost)
+- url: http://unified_api:8000
+  description: Docker Compose network
+paths:
+  /ra-literag/health:
+    get:
+      tags:
+      - ra-literag
+      - health
+      - health
+      summary: Health
+      description: 'Liveness: always 200. Use /ready for readiness.'
+      operationId: health_ra_literag_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ra-literag/ready:
+    get:
+      tags:
+      - ra-literag
+      - health
+      - health
+      summary: Ready
+      description: 'Readiness: 200 if doc-processing endpoint is configured.'
+      operationId: ready_ra_literag_ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ra-literag/config:
+    get:
+      tags:
+      - ra-literag
+      - config
+      - config
+      summary: Config Endpoint
+      description: Return non-secret app config (storage types, default workspace,
+        parser).
+      operationId: config_endpoint_ra_literag_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /ra-literag/config/{workspace_id}:
+    get:
+      tags:
+      - ra-literag
+      - config
+      - config
+      summary: Get Workspace Config
+      description: Get config stored for the given workspace (from DB). 404 if not
+        set.
+      operationId: get_workspace_config_ra_literag_config__workspace_id__get
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workspace Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - ra-literag
+      - config
+      - config
+      summary: Set Workspace Config
+      description: 'Set config for workspace. Payload is partial; missing keys are
+        filled from env defaults.
+
+        Only known keys are allowed (validation error for unknown keys). Stored in
+        DB and _rag_cache updated.'
+      operationId: set_workspace_config_ra_literag_config__workspace_id__post
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Workspace Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceConfigPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /ra-literag/query:
+    post:
+      tags:
+      - ra-literag
+      - query
+      - query
+      summary: Query
+      description: Text query over the indexed knowledge base for the given workspace.
+      operationId: query_ra_literag_query_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app__schemas__QueryRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/app__schemas__QueryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /ra-literag/query/multimodal:
+    post:
+      tags:
+      - ra-literag
+      - query
+      - query
+      summary: Query Multimodal
+      description: Query with inline multimodal content (tables, equations, image
+        paths).
+      operationId: query_multimodal_ra_literag_query_multimodal_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryMultimodalRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/app__schemas__QueryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /ra-literag/content/insert:
+    post:
+      tags:
+      - ra-literag
+      - ingest
+      - ingest
+      summary: Insert Content
+      description: Insert a pre-parsed content list (no file parsing) into the given
+        workspace.
+      operationId: insert_content_ra_literag_content_insert_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertContentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /ra-literag/documents/process:
+    post:
+      tags:
+      - ra-literag
+      - ingest
+      - ingest
+      summary: Process Document
+      description: Upload a document and run full RAG processing (parse + index) for
+        the given workspace.
+      operationId: process_document_ra_literag_documents_process_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_process_document_ra_literag_documents_process_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Body_chunk_document_doc_processing_documents_chunk_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_chunk_document_doc_processing_documents_chunk_post
+    Body_convert_ms_docs_doc_processing_documents_convert_ms_docs_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_convert_ms_docs_doc_processing_documents_convert_ms_docs_post
+    Body_pdf_to_markdown_endpoint_doc_processing_documents_pdf_to_markdown_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_pdf_to_markdown_endpoint_doc_processing_documents_pdf_to_markdown_post
+    Body_process_document_ra_literag_documents_process_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        workspace:
+          type: string
+          title: Workspace
+          description: Tenant/workspace id
+          default: default
+        output_dir:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Dir
+        parse_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parse Method
+        parser:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parser
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Id
+      type: object
+      required:
+      - file
+      title: Body_process_document_ra_literag_documents_process_post
+    Body_process_using_deepseek_doc_processing_documents_process_using_deepseek_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_process_using_deepseek_doc_processing_documents_process_using_deepseek_post
+    Body_process_using_glm_doc_processing_documents_process_using_glm_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_process_using_glm_doc_processing_documents_process_using_glm_post
+    Body_process_using_unstructured_doc_processing_documents_process_using_unstructured_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_process_using_unstructured_doc_processing_documents_process_using_unstructured_post
+    Body_xbrl_to_markdown_endpoint_doc_processing_documents_xbrl_to_markdown_post:
+      properties:
+        file:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: File
+      type: object
+      title: Body_xbrl_to_markdown_endpoint_doc_processing_documents_xbrl_to_markdown_post
+    ChunkInput:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+          description: Stable chunk identifier
+        content:
+          type: string
+          title: Content
+          description: Chunk text, table, or image description
+        type:
+          type: string
+          title: Type
+          description: One of text, table, image
+        doc_id:
+          type: string
+          title: Doc Id
+          description: Document id
+        page:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Page
+          description: Source page when available
+        bundle_id:
+          type: string
+          title: Bundle Id
+          description: Semantic bundle id
+        section_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Title
+          description: Nearest section heading
+        title_summary:
+          type: string
+          title: Title Summary
+          description: LLM section summary
+          default: ''
+        publish_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Publish Date
+          description: Document publish date if provided
+        prev_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Chunk
+          description: Previous chunk id
+        next_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Chunk
+          description: Next chunk id
+      type: object
+      required:
+      - chunk_id
+      - content
+      - type
+      - doc_id
+      - bundle_id
+      title: ChunkInput
+    ChunkItem:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+        content:
+          type: string
+          title: Content
+        type:
+          type: string
+          title: Type
+        doc_id:
+          type: string
+          title: Doc Id
+        page:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Page
+        bundle_id:
+          type: string
+          title: Bundle Id
+        section_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Title
+        title_summary:
+          type: string
+          title: Title Summary
+        publish_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Publish Date
+        prev_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Chunk
+        next_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Chunk
+        references:
+          items:
+            $ref: '#/components/schemas/ChunkReferenceItem'
+          type: array
+          title: References
+          description: Cross-references extracted from chunk text
+      type: object
+      required:
+      - chunk_id
+      - content
+      - type
+      - doc_id
+      - page
+      - bundle_id
+      - section_title
+      - title_summary
+      - publish_date
+      - prev_chunk
+      - next_chunk
+      title: ChunkItem
+      description: One FFP chunk; fields mirror `doc_processing.ffp.pipeline.Chunk`.
+    ChunkReferenceItem:
+      properties:
+        reference_text:
+          type: string
+          title: Reference Text
+          description: Exact phrase as it appears in the chunk
+        reference_type:
+          anyOf:
+          - type: string
+            enum:
+            - TABLE
+            - FIGURE
+            - SECTION
+            - SUBSECTION
+            - APPENDIX
+            - NOTE
+            - FOOTNOTE
+            - SCHEDULE
+            - STATEMENT
+            - REGULATION
+            - OTHER
+          - type: string
+          title: Reference Type
+          description: TABLE, FIGURE, SECTION, SUBSECTION, APPENDIX, NOTE, FOOTNOTE,
+            SCHEDULE, STATEMENT, REGULATION, OTHER
+        target_label:
+          type: string
+          title: Target Label
+          description: Normalized identifier for the target
+        confidence:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Confidence
+          description: Model confidence 0–1
+      type: object
+      required:
+      - reference_text
+      - reference_type
+      - target_label
+      - confidence
+      title: ChunkReferenceItem
+      description: One extracted cross-reference (aligned with docs/REFERENCES.md).
+    ChunkResponse:
+      properties:
+        chunks:
+          items:
+            $ref: '#/components/schemas/ChunkItem'
+          type: array
+          title: Chunks
+          description: Structured chunks from FinancialFilingsPipeline
+      type: object
+      required:
+      - chunks
+      title: ChunkResponse
+      description: FFP pipeline chunks for RAG.
+    ChunkTimelineItem:
+      properties:
+        snapshot_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Snapshot Id
+        chunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Chunk Id
+        canonical_event:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Canonical Event
+        canonical_subevent:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Canonical Subevent
+        ingested_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ingested At
+        supersedes_snapshot_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Supersedes Snapshot Id
+      type: object
+      title: ChunkTimelineItem
+    ChunkTimelineResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        chunk_id:
+          type: string
+          title: Chunk Id
+        items:
+          items:
+            $ref: '#/components/schemas/ChunkTimelineItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - collection_name
+      - chunk_id
+      - items
+      title: ChunkTimelineResponse
+    ChunkType:
+      type: string
+      enum:
+      - text
+      - table
+      - image
+      title: ChunkType
+    CollectionGetOrCreateResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+        ontology_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ontology Version
+        registry_backend:
+          type: string
+          title: Registry Backend
+        created:
+          type: boolean
+          title: Created
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - registry_backend
+      - created
+      title: CollectionGetOrCreateResponse
+    CollectionListResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        collections:
+          items:
+            $ref: '#/components/schemas/schemas__CollectionMetadata'
+          type: array
+          title: Collections
+      type: object
+      required:
+      - success
+      - message
+      - collections
+      title: CollectionListResponse
+    CollectionScopedRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+      type: object
+      required:
+      - collection_id
+      title: CollectionScopedRequest
+    CollectionSummary:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: CollectionSummary
+    CollectionUpsertRequest:
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Name
+          description: Human-readable collection title
+        description:
+          type: string
+          title: Description
+          description: Optional operator notes
+          default: ''
+        collection_id:
+          type: string
+          title: Collection Id
+          description: Stable slug; leave empty to derive from name (slugify)
+          default: ''
+      type: object
+      required:
+      - name
+      title: CollectionUpsertRequest
+      description: 'Get-or-create body: pass name plus optional collection_id (if
+        omitted, id is derived from name).'
+    CommunityReportsRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+      type: object
+      required:
+      - collection_id
+      title: CommunityReportsRequest
+    CommunityReportsResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        community_reports:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Community Reports
+          default: []
+      type: object
+      required:
+      - success
+      - message
+      title: CommunityReportsResponse
+      description: Fields for res_data-style API responses.
+    CompletionRequest:
+      properties:
+        provider:
+          type: string
+          title: Provider
+          description: 'Provider alias: groq, ollama, openai, anthropic'
+        messages:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          type: array
+          minItems: 1
+          title: Messages
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        reasoning_effort:
+          anyOf:
+          - type: string
+            enum:
+            - low
+            - medium
+            - high
+          - type: 'null'
+          title: Reasoning Effort
+        response_format:
+          anyOf:
+          - $ref: '#/components/schemas/ResponseFormatJsonObject'
+          - $ref: '#/components/schemas/ResponseFormatJsonSchema'
+          - type: 'null'
+          title: Response Format
+      type: object
+      required:
+      - provider
+      - messages
+      title: CompletionRequest
+    CompletionResponse:
+      properties:
+        content:
+          type: string
+          title: Content
+        parsed:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Parsed
+      type: object
+      required:
+      - content
+      title: CompletionResponse
+    ContentListItem:
+      properties:
+        type:
+          type: string
+          title: Type
+          description: text, image, table, equation, or custom
+        text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Text
+        img_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Img Path
+        image_caption:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Image Caption
+        image_footnote:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Image Footnote
+        table_body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Table Body
+        table_caption:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Table Caption
+        table_footnote:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Table Footnote
+        latex:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latex
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        page_idx:
+          type: integer
+          title: Page Idx
+          default: 0
+      type: object
+      required:
+      - type
+      title: ContentListItem
+    ContextEvidenceItem:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        document_id:
+          type: string
+          title: Document Id
+        chunk_id:
+          type: string
+          title: Chunk Id
+        timestamp:
+          type: string
+          title: Timestamp
+        section_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Title
+        section_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Label
+        title_summary:
+          type: string
+          title: Title Summary
+        content_snippet:
+          type: string
+          title: Content Snippet
+      type: object
+      required:
+      - collection_id
+      - document_id
+      - chunk_id
+      - timestamp
+      - section_title
+      - section_label
+      - title_summary
+      - content_snippet
+      title: ContextEvidenceItem
+    ContextSummary:
+      properties:
+        document_count:
+          type: integer
+          title: Document Count
+        chunk_count:
+          type: integer
+          title: Chunk Count
+        event_count:
+          type: integer
+          title: Event Count
+        reference_count:
+          type: integer
+          title: Reference Count
+        table_count:
+          type: integer
+          title: Table Count
+      type: object
+      required:
+      - document_count
+      - chunk_count
+      - event_count
+      - reference_count
+      - table_count
+      title: ContextSummary
+    ConvertResponse:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Converted markdown content
+      type: object
+      required:
+      - markdown
+      title: ConvertResponse
+      description: Result of document-to-markdown conversion.
+    CreateCollectionRequest:
+      properties:
+        collection_name:
+          type: string
+          minLength: 1
+          title: Collection Name
+        ontology_id:
+          type: string
+          minLength: 1
+          title: Ontology Id
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      title: CreateCollectionRequest
+    CreateEventSupersessionRequest:
+      properties:
+        newer_event_id:
+          type: string
+          minLength: 1
+          title: Newer Event Id
+        older_event_id:
+          type: string
+          minLength: 1
+          title: Older Event Id
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      required:
+      - newer_event_id
+      - older_event_id
+      title: CreateEventSupersessionRequest
+    DeleteFileRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+        file_name:
+          type: string
+          title: File Name
+      type: object
+      required:
+      - collection_id
+      - file_name
+      title: DeleteFileRequest
+    EmbeddingDataItem:
+      properties:
+        object:
+          type: string
+          title: Object
+        index:
+          type: integer
+          title: Index
+        embedding:
+          anyOf:
+          - items:
+              type: number
+            type: array
+          - type: string
+          title: Embedding
+      type: object
+      required:
+      - object
+      - index
+      - embedding
+      title: EmbeddingDataItem
+    EmbeddingRequest:
+      properties:
+        provider:
+          type: string
+          title: Provider
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Input
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        encoding_format:
+          anyOf:
+          - type: string
+            enum:
+            - float
+            - base64
+          - type: 'null'
+          title: Encoding Format
+        dimensions:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: Dimensions
+        input_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Input Type
+        user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User
+      type: object
+      required:
+      - provider
+      - input
+      title: EmbeddingRequest
+    EmbeddingResponse:
+      properties:
+        object:
+          type: string
+          title: Object
+        model:
+          type: string
+          title: Model
+        data:
+          items:
+            $ref: '#/components/schemas/EmbeddingDataItem'
+          type: array
+          title: Data
+        usage:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Usage
+      type: object
+      required:
+      - object
+      - model
+      - data
+      title: EmbeddingResponse
+    EntityCollectionConnection:
+      properties:
+        collection_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Collection Name
+        entity_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Entity Name
+        entity_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Entity Type
+        observed_roles:
+          items:
+            type: string
+          type: array
+          title: Observed Roles
+          default: []
+        mention_count:
+          type: integer
+          title: Mention Count
+          default: 0
+      type: object
+      title: EntityCollectionConnection
+    EntityCollectionsResponse:
+      properties:
+        entity_name:
+          type: string
+          title: Entity Name
+        connections:
+          items:
+            $ref: '#/components/schemas/EntityCollectionConnection'
+          type: array
+          title: Connections
+      type: object
+      required:
+      - entity_name
+      - connections
+      title: EntityCollectionsResponse
+    EventSearchHit:
+      properties:
+        event_id:
+          type: string
+          title: Event Id
+        collection_name:
+          type: string
+          title: Collection Name
+        canonical_event:
+          type: string
+          title: Canonical Event
+        canonical_subevent:
+          type: string
+          title: Canonical Subevent
+        normalized_subtype:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Normalized Subtype
+        event_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Event Time
+        confidence:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Confidence
+        direction:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Direction
+        magnitude:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Magnitude
+        probability:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Probability
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        source_snapshot_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Snapshot Id
+        superseded_by_event_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Superseded By Event Id
+        supersession_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Supersession Reason
+      type: object
+      required:
+      - event_id
+      - collection_name
+      - canonical_event
+      - canonical_subevent
+      title: EventSearchHit
+    EventSearchResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        hits:
+          items:
+            $ref: '#/components/schemas/EventSearchHit'
+          type: array
+          title: Hits
+      type: object
+      required:
+      - collection_name
+      - hits
+      title: EventSearchResponse
+    EventSupersessionCreatedResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        newer_event_id:
+          type: string
+          title: Newer Event Id
+        older_event_id:
+          type: string
+          title: Older Event Id
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+      type: object
+      required:
+      - collection_name
+      - newer_event_id
+      - older_event_id
+      title: EventSupersessionCreatedResponse
+    EventSupersessionDetailResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        event_id:
+          type: string
+          title: Event Id
+        superseded_by_event_ids:
+          items:
+            type: string
+          type: array
+          title: Superseded By Event Ids
+          default: []
+        supersedes_event_ids:
+          items:
+            type: string
+          type: array
+          title: Supersedes Event Ids
+          default: []
+      type: object
+      required:
+      - collection_name
+      - event_id
+      title: EventSupersessionDetailResponse
+    ExtracGraphDataResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        graph_chunks:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Graph Chunks
+          default: []
+        graph_vocabulary_set:
+          items: {}
+          type: array
+          uniqueItems: true
+          title: Graph Vocabulary Set
+          default: []
+        community_reports:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Community Reports
+          default: []
+      type: object
+      required:
+      - success
+      - message
+      title: ExtracGraphDataResponse
+      description: Fields for res_data-style API responses.
+    GetCollectionByIdRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+      type: object
+      required:
+      - collection_id
+      title: GetCollectionByIdRequest
+    GetGraphRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+        kb_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Kb Id
+      type: object
+      required:
+      - collection_id
+      title: GetGraphRequest
+    GraphDataResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        graph_data:
+          additionalProperties: true
+          type: object
+          title: Graph Data
+      type: object
+      required:
+      - success
+      - message
+      - graph_data
+      title: GraphDataResponse
+      description: Fields for res_data-style API responses.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ImageItem:
+      properties:
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+          description: Element metadata
+        image_base64:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Base64
+          description: Base64-encoded image when in payload
+      type: object
+      title: ImageItem
+      description: One extracted image block.
+    ImpactPriorResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+        ontology_version:
+          type: string
+          title: Ontology Version
+        canonical_event:
+          type: string
+          title: Canonical Event
+        canonical_subevent:
+          type: string
+          title: Canonical Subevent
+        prior:
+          additionalProperties: true
+          type: object
+          title: Prior
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - ontology_version
+      - canonical_event
+      - canonical_subevent
+      - prior
+      title: ImpactPriorResponse
+    IngestBatchRequest:
+      properties:
+        collection_name:
+          type: string
+          minLength: 1
+          title: Collection Name
+        ontology_id:
+          type: string
+          minLength: 1
+          title: Ontology Id
+        chunks:
+          items:
+            $ref: '#/components/schemas/IngestChunk'
+          type: array
+          minItems: 1
+          title: Chunks
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - chunks
+      title: IngestBatchRequest
+    IngestBatchResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+        accepted_chunks:
+          type: integer
+          title: Accepted Chunks
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - accepted_chunks
+      title: IngestBatchResponse
+    IngestChunk:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+          description: Stable chunk identifier
+        content:
+          type: string
+          title: Content
+          description: Chunk text, table, or image description
+        type:
+          $ref: '#/components/schemas/ChunkType'
+          description: One of text, table, image
+        doc_id:
+          type: string
+          title: Doc Id
+          description: Document id
+        page:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Page
+          description: Source page when available
+        bundle_id:
+          type: string
+          title: Bundle Id
+          description: Semantic bundle id
+        section_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Title
+          description: Nearest section heading
+        title_summary:
+          type: string
+          title: Title Summary
+          description: LLM section summary
+          default: ''
+        publish_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Publish Date
+          description: Document publish date if provided
+        prev_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Chunk
+          description: Previous chunk id
+        next_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Chunk
+          description: Next chunk id
+        canonical_event:
+          type: string
+          title: Canonical Event
+          description: Top-level ontology event type
+        canonical_subevent:
+          type: string
+          title: Canonical Subevent
+          description: Ontology subevent type
+      type: object
+      required:
+      - chunk_id
+      - content
+      - type
+      - doc_id
+      - bundle_id
+      - canonical_event
+      - canonical_subevent
+      title: IngestChunk
+    IngestChunkItem:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+          description: Stable chunk identifier
+        content:
+          type: string
+          title: Content
+          description: Chunk text, table, or image description
+        type:
+          type: string
+          title: Type
+          description: One of text, table, image
+        doc_id:
+          type: string
+          title: Doc Id
+          description: Document id
+        page:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Page
+          description: Source page when available
+        bundle_id:
+          type: string
+          title: Bundle Id
+          description: Semantic bundle id
+        section_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Title
+          description: Nearest section heading
+        title_summary:
+          type: string
+          title: Title Summary
+          description: LLM section summary
+          default: ''
+        publish_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Publish Date
+          description: Document publish date if provided
+        prev_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev Chunk
+          description: Previous chunk id
+        next_chunk:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Chunk
+          description: Next chunk id
+        canonical_event:
+          type: string
+          title: Canonical Event
+          description: Ontology level-1 event
+        canonical_subevent:
+          type: string
+          title: Canonical Subevent
+          description: Ontology level-2 subevent
+        normalized_subtype:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Normalized Subtype
+          description: Level-3 subtype; derived server-side if omitted
+      type: object
+      required:
+      - chunk_id
+      - content
+      - type
+      - doc_id
+      - bundle_id
+      - canonical_event
+      - canonical_subevent
+      title: IngestChunkItem
+    IngestChunksRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+        chunks:
+          items:
+            $ref: '#/components/schemas/ChunkInput'
+          type: array
+          title: Chunks
+        file_name:
+          type: string
+          title: File Name
+        temperature:
+          type: number
+          title: Temperature
+          default: 0.001
+        schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Schema
+      type: object
+      required:
+      - collection_id
+      - chunks
+      - file_name
+      title: IngestChunksRequest
+    IngestJobCreateResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        state:
+          $ref: '#/components/schemas/JobState'
+          default: pending
+        poll_url:
+          type: string
+          title: Poll Url
+        sse_url:
+          type: string
+          title: Sse Url
+      type: object
+      required:
+      - job_id
+      - poll_url
+      - sse_url
+      title: IngestJobCreateResponse
+    IngestJobStatus:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        state:
+          $ref: '#/components/schemas/JobState'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        result_summary:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Result Summary
+      type: object
+      required:
+      - job_id
+      - state
+      - created_at
+      - updated_at
+      title: IngestJobStatus
+    IngestPayload:
+      properties:
+        ontology_id:
+          type: string
+          title: Ontology Id
+          description: Ontology file id (e.g. company_data)
+        collection_id:
+          type: string
+          title: Collection Id
+          description: Graph partition id (required). Documents/chunks/events are
+            ingested in this collection context
+        chunks:
+          items:
+            $ref: '#/components/schemas/IngestChunkItem'
+          type: array
+          minItems: 1
+          title: Chunks
+        webhook_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Webhook Url
+          description: POST JSON job status on completion (optional)
+        idempotency_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Idempotency Key
+      type: object
+      required:
+      - ontology_id
+      - collection_id
+      - chunks
+      title: IngestPayload
+      description: 'Batch ingest: all chunks must share the same doc_id + publish_date
+        grouping key.'
+    IngestProcessResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+        accepted_chunks:
+          type: integer
+          title: Accepted Chunks
+        processed:
+          items:
+            $ref: '#/components/schemas/ProcessedChunkSummary'
+          type: array
+          title: Processed
+        persisted_snapshots:
+          type: integer
+          title: Persisted Snapshots
+          default: 0
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - accepted_chunks
+      - processed
+      title: IngestProcessResponse
+    InsertContentRequest:
+      properties:
+        workspace:
+          type: string
+          title: Workspace
+          description: Tenant/workspace id
+          default: default
+        content_list:
+          items:
+            $ref: '#/components/schemas/ContentListItem'
+          type: array
+          title: Content List
+          description: Pre-parsed content items
+        file_path:
+          type: string
+          title: File Path
+          description: Reference name for citations
+          default: unknown_document
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Id
+        split_by_character:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Split By Character
+        split_by_character_only:
+          type: boolean
+          title: Split By Character Only
+          default: false
+      type: object
+      required:
+      - content_list
+      title: InsertContentRequest
+    JobState:
+      type: string
+      enum:
+      - pending
+      - running
+      - completed
+      - failed
+      title: JobState
+    JsonSchemaPayload:
+      properties:
+        name:
+          type: string
+          title: Name
+        schema:
+          additionalProperties: true
+          type: object
+          title: Schema
+        strict:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Strict
+      type: object
+      required:
+      - name
+      - schema
+      title: JsonSchemaPayload
+    ModelsResponse:
+      properties:
+        default_model:
+          type: string
+          title: Default Model
+        fallback_model:
+          type: string
+          title: Fallback Model
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+      type: object
+      required:
+      - default_model
+      - fallback_model
+      - models
+      title: ModelsResponse
+    MultiStepRagRequest:
+      properties:
+        question:
+          type: string
+          minLength: 1
+          title: Question
+        max_steps:
+          type: integer
+          maximum: 25.0
+          minimum: 1.0
+          title: Max Steps
+          default: 10
+      type: object
+      required:
+      - question
+      title: MultiStepRagRequest
+    MultiStepRagResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        question:
+          type: string
+          title: Question
+        initial_plan:
+          type: string
+          title: Initial Plan
+        answer:
+          type: string
+          title: Answer
+        steps:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Steps
+          default: []
+      type: object
+      required:
+      - collection_name
+      - question
+      - initial_plan
+      - answer
+      title: MultiStepRagResponse
+    MultimodalItem:
+      properties:
+        type:
+          type: string
+          title: Type
+          description: 'One of: table, equation, image'
+        table_data:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Table Data
+        table_body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Table Body
+        table_caption:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Table Caption
+        table_footnote:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Table Footnote
+        latex:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latex
+        equation_caption:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Equation Caption
+        img_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Img Path
+        image_caption:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Image Caption
+        image_footnote:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Image Footnote
+      type: object
+      required:
+      - type
+      title: MultimodalItem
+    OpenAIChatCompletionChoice:
+      properties:
+        index:
+          type: integer
+          title: Index
+        message:
+          $ref: '#/components/schemas/OpenAIChatCompletionMessage'
+        finish_reason:
+          anyOf:
+          - type: string
+            enum:
+            - stop
+            - length
+            - tool_calls
+            - content_filter
+            - function_call
+          - type: 'null'
+          title: Finish Reason
+          default: stop
+      type: object
+      required:
+      - index
+      - message
+      title: OpenAIChatCompletionChoice
+    OpenAIChatCompletionMessage:
+      properties:
+        role:
+          type: string
+          const: assistant
+          title: Role
+          default: assistant
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+      type: object
+      title: OpenAIChatCompletionMessage
+    OpenAIChatCompletionRequest:
+      properties:
+        model:
+          type: string
+          title: Model
+        messages:
+          items:
+            $ref: '#/components/schemas/OpenAIChatMessage'
+          type: array
+          minItems: 1
+          title: Messages
+        temperature:
+          anyOf:
+          - type: number
+            maximum: 2.0
+            minimum: 0.0
+          - type: 'null'
+          title: Temperature
+        top_p:
+          anyOf:
+          - type: number
+            maximum: 1.0
+            minimum: 0.0
+          - type: 'null'
+          title: Top P
+        max_tokens:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: Max Tokens
+        max_completion_tokens:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: Max Completion Tokens
+        n:
+          anyOf:
+          - type: integer
+            maximum: 128.0
+            minimum: 1.0
+          - type: 'null'
+          title: N
+        stream:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Stream
+          default: false
+        stop:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Stop
+        presence_penalty:
+          anyOf:
+          - type: number
+            maximum: 2.0
+            minimum: -2.0
+          - type: 'null'
+          title: Presence Penalty
+        frequency_penalty:
+          anyOf:
+          - type: number
+            maximum: 2.0
+            minimum: -2.0
+          - type: 'null'
+          title: Frequency Penalty
+        user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User
+        response_format:
+          anyOf:
+          - $ref: '#/components/schemas/OpenAIResponseFormat'
+          - type: 'null'
+        reasoning_effort:
+          anyOf:
+          - type: string
+            enum:
+            - low
+            - medium
+            - high
+          - type: 'null'
+          title: Reasoning Effort
+      type: object
+      required:
+      - model
+      - messages
+      title: OpenAIChatCompletionRequest
+    OpenAIChatCompletionResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        object:
+          type: string
+          const: chat.completion
+          title: Object
+          default: chat.completion
+        created:
+          type: integer
+          title: Created
+        model:
+          type: string
+          title: Model
+        choices:
+          items:
+            $ref: '#/components/schemas/OpenAIChatCompletionChoice'
+          type: array
+          title: Choices
+        usage:
+          $ref: '#/components/schemas/OpenAICompletionUsage'
+      type: object
+      required:
+      - id
+      - created
+      - model
+      - choices
+      - usage
+      title: OpenAIChatCompletionResponse
+    OpenAIChatMessage:
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          - developer
+          title: Role
+        content:
+          anyOf:
+          - type: string
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Content
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        tool_calls:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Tool Calls
+        tool_call_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tool Call Id
+      type: object
+      required:
+      - role
+      title: OpenAIChatMessage
+    OpenAICompletionUsage:
+      properties:
+        prompt_tokens:
+          type: integer
+          title: Prompt Tokens
+          default: 0
+        completion_tokens:
+          type: integer
+          title: Completion Tokens
+          default: 0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+      type: object
+      title: OpenAICompletionUsage
+    OpenAIEmbeddingListResponse:
+      properties:
+        object:
+          type: string
+          const: list
+          title: Object
+          default: list
+        model:
+          type: string
+          title: Model
+        data:
+          items:
+            $ref: '#/components/schemas/OpenAIEmbeddingObject'
+          type: array
+          title: Data
+        usage:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Usage
+      type: object
+      required:
+      - model
+      - data
+      - usage
+      title: OpenAIEmbeddingListResponse
+    OpenAIEmbeddingObject:
+      properties:
+        object:
+          type: string
+          const: embedding
+          title: Object
+          default: embedding
+        index:
+          type: integer
+          title: Index
+        embedding:
+          anyOf:
+          - items:
+              type: number
+            type: array
+          - type: string
+          title: Embedding
+      type: object
+      required:
+      - index
+      - embedding
+      title: OpenAIEmbeddingObject
+    OpenAIEmbeddingRequest:
+      properties:
+        model:
+          type: string
+          title: Model
+        input:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Input
+        encoding_format:
+          anyOf:
+          - type: string
+            enum:
+            - float
+            - base64
+          - type: 'null'
+          title: Encoding Format
+        dimensions:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: Dimensions
+        user:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User
+      type: object
+      required:
+      - model
+      - input
+      title: OpenAIEmbeddingRequest
+    OpenAIModelCard:
+      properties:
+        id:
+          type: string
+          title: Id
+        object:
+          type: string
+          const: model
+          title: Object
+          default: model
+        created:
+          type: integer
+          title: Created
+        owned_by:
+          type: string
+          title: Owned By
+      type: object
+      required:
+      - id
+      - created
+      - owned_by
+      title: OpenAIModelCard
+    OpenAIModelListResponse:
+      properties:
+        object:
+          type: string
+          const: list
+          title: Object
+          default: list
+        data:
+          items:
+            $ref: '#/components/schemas/OpenAIModelCard'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OpenAIModelListResponse
+    OpenAIResponseFormat:
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          - json_object
+          - json_schema
+          title: Type
+        json_schema:
+          anyOf:
+          - $ref: '#/components/schemas/OpenAIResponseFormatJsonSchema'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      title: OpenAIResponseFormat
+    OpenAIResponseFormatJsonSchema:
+      properties:
+        name:
+          type: string
+          title: Name
+        schema:
+          additionalProperties: true
+          type: object
+          title: Schema
+        strict:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Strict
+      type: object
+      required:
+      - name
+      - schema
+      title: OpenAIResponseFormatJsonSchema
+    PdfToMarkdownResponse:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Converted markdown content
+      type: object
+      required:
+      - markdown
+      title: PdfToMarkdownResponse
+      description: Result of PDF-to-markdown conversion.
+    ProcessFromUrlResponse:
+      properties:
+        tables:
+          items:
+            $ref: '#/components/schemas/TableItem'
+          type: array
+          title: Tables
+          description: Extracted tables
+        images:
+          items:
+            $ref: '#/components/schemas/ImageItem'
+          type: array
+          title: Images
+          description: Extracted images
+        extract_output_dir:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Extract Output Dir
+          description: Dir path if images saved to disk
+      type: object
+      required:
+      - tables
+      - images
+      title: ProcessFromUrlResponse
+      description: 'Result of process-from-url: tables and images.'
+    ProcessedChunkSummary:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+        canonical_event:
+          type: string
+          title: Canonical Event
+        canonical_subevent:
+          type: string
+          title: Canonical Subevent
+        extraction_text:
+          type: string
+          title: Extraction Text
+        embedding_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Embedding Model
+        embedding_vector_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Embedding Vector Size
+        impact_direction:
+          type: string
+          title: Impact Direction
+        impact_magnitude:
+          type: string
+          title: Impact Magnitude
+        impact_probability:
+          type: number
+          title: Impact Probability
+        short_term_return_bps:
+          type: integer
+          title: Short Term Return Bps
+        medium_term_return_bps:
+          type: integer
+          title: Medium Term Return Bps
+        decay_half_life_days:
+          type: integer
+          title: Decay Half Life Days
+        causality_target:
+          type: string
+          title: Causality Target
+        causality_reason:
+          type: string
+          title: Causality Reason
+        entities:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Entities
+          default: []
+        extracted_events:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Extracted Events
+          default: []
+      type: object
+      required:
+      - chunk_id
+      - canonical_event
+      - canonical_subevent
+      - extraction_text
+      - impact_direction
+      - impact_magnitude
+      - impact_probability
+      - short_term_return_bps
+      - medium_term_return_bps
+      - decay_half_life_days
+      - causality_target
+      - causality_reason
+      title: ProcessedChunkSummary
+    QueryAnswer:
+      properties:
+        question:
+          type: string
+          title: Question
+        direct_answer:
+          type: string
+          title: Direct Answer
+        confidence:
+          type: number
+          title: Confidence
+        context_summary:
+          type: string
+          title: Context Summary
+        supporting_facts:
+          items:
+            type: string
+          type: array
+          title: Supporting Facts
+      type: object
+      required:
+      - question
+      - direct_answer
+      - confidence
+      - context_summary
+      title: QueryAnswer
+    QueryContext:
+      properties:
+        summary:
+          $ref: '#/components/schemas/ContextSummary'
+        documents:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Documents
+        evidence:
+          items:
+            $ref: '#/components/schemas/ContextEvidenceItem'
+          type: array
+          title: Evidence
+        reference_traces:
+          items:
+            $ref: '#/components/schemas/ReferenceTraceItem'
+          type: array
+          title: Reference Traces
+        table_evidence:
+          items:
+            $ref: '#/components/schemas/TableEvidenceItem'
+          type: array
+          title: Table Evidence
+      type: object
+      required:
+      - summary
+      title: QueryContext
+    QueryMultimodalRequest:
+      properties:
+        workspace:
+          type: string
+          title: Workspace
+          description: Tenant/workspace id
+          default: default
+        query:
+          type: string
+          title: Query
+          description: Question in context of the given multimodal content
+        multimodal_content:
+          items:
+            $ref: '#/components/schemas/MultimodalItem'
+          type: array
+          title: Multimodal Content
+          description: Tables, equations, or image refs
+        mode:
+          type: string
+          title: Mode
+          description: Query mode
+          default: hybrid
+      type: object
+      required:
+      - query
+      - multimodal_content
+      title: QueryMultimodalRequest
+    QueryResult:
+      properties:
+        parsed_query:
+          additionalProperties: true
+          type: object
+          title: Parsed Query
+        plan:
+          additionalProperties: true
+          type: object
+          title: Plan
+        execution:
+          additionalProperties: true
+          type: object
+          title: Execution
+        context:
+          $ref: '#/components/schemas/QueryContext'
+        answer:
+          $ref: '#/components/schemas/QueryAnswer'
+      type: object
+      required:
+      - parsed_query
+      - plan
+      - execution
+      - context
+      - answer
+      title: QueryResult
+    RagAnswerRequest:
+      properties:
+        question:
+          type: string
+          minLength: 1
+          title: Question
+        top_k:
+          type: integer
+          maximum: 30.0
+          minimum: 1.0
+          title: Top K
+          default: 5
+        retrieval_mode:
+          type: string
+          enum:
+          - lexical
+          - vector
+          title: Retrieval Mode
+          default: lexical
+      type: object
+      required:
+      - question
+      title: RagAnswerRequest
+    RagAnswerResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        question:
+          type: string
+          title: Question
+        answer:
+          type: string
+          title: Answer
+        sources:
+          items:
+            $ref: '#/components/schemas/RagSourceRef'
+          type: array
+          title: Sources
+      type: object
+      required:
+      - collection_name
+      - question
+      - answer
+      - sources
+      title: RagAnswerResponse
+    RagSourceRef:
+      properties:
+        snapshot_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Snapshot Id
+        chunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Chunk Id
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Id
+      type: object
+      title: RagSourceRef
+    ReferenceTraceItem:
+      properties:
+        source_chunk_id:
+          type: string
+          title: Source Chunk Id
+        reference_text:
+          type: string
+          title: Reference Text
+        reference_type:
+          type: string
+          title: Reference Type
+        target_label:
+          type: string
+          title: Target Label
+        resolved:
+          type: boolean
+          title: Resolved
+        reason:
+          type: string
+          title: Reason
+        target_chunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Chunk Id
+        target_document_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Document Id
+      type: object
+      required:
+      - source_chunk_id
+      - reference_text
+      - reference_type
+      - target_label
+      - resolved
+      - reason
+      title: ReferenceTraceItem
+    RequestResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+      type: object
+      required:
+      - success
+      - message
+      title: RequestResponse
+      description: Fields for res_data-style API responses.
+    ResponseFormatJsonObject:
+      properties:
+        type:
+          type: string
+          const: json_object
+          title: Type
+      type: object
+      required:
+      - type
+      title: ResponseFormatJsonObject
+    ResponseFormatJsonSchema:
+      properties:
+        type:
+          type: string
+          const: json_schema
+          title: Type
+        json_schema:
+          $ref: '#/components/schemas/JsonSchemaPayload'
+      type: object
+      required:
+      - type
+      - json_schema
+      title: ResponseFormatJsonSchema
+    RetrievalQuery:
+      properties:
+        question:
+          type: string
+          title: Question
+          description: Natural language question for multi-hop agent
+        collection_id:
+          type: string
+          title: Collection Id
+          description: Required collection partition id
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Id
+          description: Restrict context to a document
+        publish_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Publish Date
+          description: ISO date string matching Document.publish_date
+      type: object
+      required:
+      - question
+      - collection_id
+      title: RetrievalQuery
+    RetrievalResponse:
+      properties:
+        answer:
+          type: string
+          title: Answer
+        tool_trace:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Tool Trace
+      type: object
+      required:
+      - answer
+      title: RetrievalResponse
+    RetrieveRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+        query:
+          type: string
+          title: Query
+        top_k:
+          type: integer
+          title: Top K
+          default: 10
+      type: object
+      required:
+      - collection_id
+      - query
+      title: RetrieveRequest
+    RetrieveResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        query:
+          type: string
+          title: Query
+        collection_id:
+          type: string
+          title: Collection Id
+        evidence:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Evidence
+        chunk_evidence:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Chunk Evidence
+          default: []
+      type: object
+      required:
+      - success
+      - message
+      - query
+      - collection_id
+      - evidence
+      title: RetrieveResponse
+    SnapshotSearchHit:
+      properties:
+        snapshot_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Snapshot Id
+        chunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Chunk Id
+        doc_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Id
+        bundle_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bundle Id
+        canonical_event:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Canonical Event
+        canonical_subevent:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Canonical Subevent
+        ingested_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ingested At
+        extraction_text:
+          type: string
+          title: Extraction Text
+          default: ''
+        similarity:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Similarity
+      type: object
+      title: SnapshotSearchHit
+    SnapshotSearchResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        query:
+          type: string
+          title: Query
+        mode:
+          type: string
+          enum:
+          - lexical
+          - vector
+          title: Mode
+          default: lexical
+        hits:
+          items:
+            $ref: '#/components/schemas/SnapshotSearchHit'
+          type: array
+          title: Hits
+      type: object
+      required:
+      - collection_name
+      - query
+      - hits
+      title: SnapshotSearchResponse
+    TableEvidenceItem:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        document_id:
+          type: string
+          title: Document Id
+        source_chunk_id:
+          type: string
+          title: Source Chunk Id
+        target_chunk_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Chunk Id
+        target_label:
+          type: string
+          title: Target Label
+      type: object
+      required:
+      - collection_id
+      - document_id
+      - source_chunk_id
+      - target_chunk_id
+      - target_label
+      title: TableEvidenceItem
+    TableItem:
+      properties:
+        text:
+          type: string
+          title: Text
+          description: Plain-text table content
+        text_as_html:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Text As Html
+          description: Table as HTML when available
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+          description: Element metadata
+      type: object
+      required:
+      - text
+      title: TableItem
+      description: One extracted table.
+    TestPostRequest:
+      properties:
+        payload:
+          additionalProperties: true
+          type: object
+          title: Payload
+      type: object
+      title: TestPostRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    WorkspaceConfigPayload:
+      properties:
+        working_dir:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Working Dir
+        parser:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parser
+        parse_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Parse Method
+        enable_image_processing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enable Image Processing
+        enable_table_processing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enable Table Processing
+        enable_equation_processing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enable Equation Processing
+        kv_storage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Kv Storage
+        vector_storage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vector Storage
+        graph_storage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Graph Storage
+        doc_status_storage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Doc Status Storage
+        top_k:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Top K
+        chunk_top_k:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Chunk Top K
+        max_entity_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Entity Tokens
+        max_relation_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Relation Tokens
+        max_total_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Total Tokens
+        cosine_better_than_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cosine Better Than Threshold
+        vector_db_storage_cls_kwargs:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Vector Db Storage Cls Kwargs
+      additionalProperties: false
+      type: object
+      title: WorkspaceConfigPayload
+      description: Allowed workspace config keys for POST /config/{workspace_id}.
+        Extra keys are forbidden.
+    XbrlToMarkdownResponse:
+      properties:
+        markdown:
+          type: string
+          title: Markdown
+          description: Converted markdown content
+      type: object
+      required:
+      - markdown
+      title: XbrlToMarkdownResponse
+      description: Result of XBRL-to-markdown conversion.
+    app__schemas__QueryRequest:
+      properties:
+        workspace:
+          type: string
+          title: Workspace
+          description: Tenant/workspace id for data isolation
+          default: default
+        query:
+          type: string
+          title: Query
+          description: Natural language question
+        mode:
+          type: string
+          title: Mode
+          description: 'Query mode: local, global, hybrid, naive, mix, bypass'
+          default: hybrid
+        vlm_enhanced:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Vlm Enhanced
+          description: Use VLM for images in context
+        system_prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: System Prompt
+      type: object
+      required:
+      - query
+      title: QueryRequest
+    app__schemas__QueryResponse:
+      properties:
+        answer:
+          type: string
+          title: Answer
+      type: object
+      required:
+      - answer
+      title: QueryResponse
+    raqe__models__collection__CollectionMetadata:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        document_count:
+          type: integer
+          title: Document Count
+        chunk_count:
+          type: integer
+          title: Chunk Count
+        earliest_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Earliest Timestamp
+        latest_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Timestamp
+      type: object
+      required:
+      - id
+      - name
+      - document_count
+      - chunk_count
+      title: CollectionMetadata
+    raqe__models__collection__GetOrCreateCollectionRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+      type: object
+      required:
+      - collection_id
+      title: GetOrCreateCollectionRequest
+    raqe__models__query_request__QueryRequest:
+      properties:
+        question:
+          type: string
+          minLength: 1
+          title: Question
+        collection:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Collection
+        section_hint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Hint
+        strict_reference_resolution:
+          type: boolean
+          title: Strict Reference Resolution
+          default: false
+      type: object
+      required:
+      - question
+      title: QueryRequest
+    schemas__CollectionMetadata:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+          default: ''
+        created_at:
+          type: string
+          title: Created At
+        updated_at:
+          type: string
+          title: Updated At
+      type: object
+      required:
+      - collection_id
+      - name
+      - created_at
+      - updated_at
+      title: CollectionMetadata
+    schemas__CollectionResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        collection:
+          $ref: '#/components/schemas/schemas__CollectionMetadata'
+      type: object
+      required:
+      - success
+      - message
+      - collection
+      title: CollectionResponse
+    schemas__GetOrCreateCollectionRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          type: string
+          title: Description
+          default: ''
+      type: object
+      required:
+      - collection_id
+      title: GetOrCreateCollectionRequest
+    schemas__QueryRequest:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        client_id:
+          type: string
+          title: Client Id
+          default: default
+        question:
+          type: string
+          title: Question
+        top_k:
+          type: integer
+          title: Top K
+          default: 10
+        temperature:
+          type: number
+          title: Temperature
+          default: 0.001
+      type: object
+      required:
+      - collection_id
+      - question
+      title: QueryRequest
+    schemas__QueryResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        message:
+          type: string
+          title: Message
+        question:
+          type: string
+          title: Question
+        collection_id:
+          type: string
+          title: Collection Id
+        answer:
+          type: string
+          title: Answer
+        evidence:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Evidence
+        chunk_evidence:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Chunk Evidence
+          default: []
+      type: object
+      required:
+      - success
+      - message
+      - question
+      - collection_id
+      - answer
+      - evidence
+      title: QueryResponse
+    temporal_graph__models__api__CollectionDetailResponse:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated At
+        document_count:
+          type: integer
+          title: Document Count
+          default: 0
+        chunk_count:
+          type: integer
+          title: Chunk Count
+          default: 0
+        statement_event_count:
+          type: integer
+          title: Statement Event Count
+          default: 0
+      type: object
+      required:
+      - collection_id
+      - name
+      - description
+      title: CollectionDetailResponse
+      description: Collection plus aggregate counts for documents attached under this
+        partition.
+    temporal_graph__models__api__CollectionResponse:
+      properties:
+        collection_id:
+          type: string
+          title: Collection Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        created:
+          type: boolean
+          title: Created
+          description: True if this request created the node (best-effort; see implementation)
+          default: false
+      type: object
+      required:
+      - collection_id
+      - name
+      - description
+      title: CollectionResponse
+      description: Collection metadata after upsert.
+    temporial_graph_rag__api__constants__CollectionDetailResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+        ontology_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ontology Version
+        registry_backend:
+          type: string
+          title: Registry Backend
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      - registry_backend
+      title: CollectionDetailResponse
+    temporial_graph_rag__api__constants__CollectionResponse:
+      properties:
+        collection_name:
+          type: string
+          title: Collection Name
+        ontology_id:
+          type: string
+          title: Ontology Id
+      type: object
+      required:
+      - collection_name
+      - ontology_id
+      title: CollectionResponse
