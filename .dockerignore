@@ -1,0 +1,37 @@
+# Docker build context exclusions (unified_api uses context: .)
+.git/
+**/.git/
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/.env
+**/.env.*
+!**/.env.example
+!**/env.example
+
+# Persistent database / model volumes (bind-mounted at runtime, not baked into image)
+/db/
+/test_db/
+
+# Runtime logs (bind-mounted)
+**/logs/*.log
+
+# Large ephemeral / cache dirs
+**/data/temp/
+doc_processing/data/temp/
+
+# IDE / editor
+.cursor/
+.vscode/
+.idea/
+
+# Docs and notebooks (not needed in runtime image)
+docs/
+**/*.ipynb
+
+# CI-only
+.env.ci

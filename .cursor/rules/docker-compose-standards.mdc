@@ -1,13 +1,14 @@
 ---
 description: Standards for unified Docker Compose across all standalone services
-globs: "{docker-compose*.yml,docker-compose*.yaml,**/Dockerfile.compose}"
+globs: "{docker-compose*.yml,docker-compose*.yaml,docker-compose-test.yaml,**/Dockerfile.compose}"
 alwaysApply: false
 ---
 
 # Docker Compose Standards
 
 - Keep one unified compose stack for `core_rag_graph`, `fin_rag`, `ra_literag`, `temporial_graph`, `temporial_graph_openai`, and `temporial_graph_traversal`.
-- Shared databases must be `postgres`, `neo4j`, and `chroma` with named volumes and health checks.
+- Shared databases: `neo4j` and `chroma` for graph-backed services; `postgres` only for services that use it (`fin_rag`, `ra_literag`). `core_rag_graph` does not depend on Postgres. Use bind mounts / health checks per root `docker-compose.yml`.
 - In container env values, use compose DNS names (`postgres`, `neo4j`, `chroma`) instead of `localhost`.
 - Any new service added to compose must also define explicit host and container ports and a startup command.
 - Prefer service-local `Dockerfile.compose` when no Dockerfile exists.
+- Each service with `Dockerfile.compose` must have a **`.dockerignore`** so the build context excludes `.venv/`, `.git/`, caches, and runtime dirs; otherwise `docker compose build` transfers hundreds of MB per service.

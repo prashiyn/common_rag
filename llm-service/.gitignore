@@ -1,0 +1,37 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment and secrets (keep .env.example)
+.env
+.env.local
+*.local.env
+**/api_keys.env
+
+# Editors / OS
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

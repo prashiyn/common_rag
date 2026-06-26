@@ -1,0 +1,53 @@
+# syntax=docker/dockerfile:1
+FROM python:3.12-slim
+
+LABEL service="unified-api"
+
+WORKDIR /repo
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ffmpeg \
+        libglib2.0-0 \
+        libsm6 \
+        libxrender1 \
+        libxext6 \
+        libxcb1 \
+        libgomp1 \
+        libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir uv
+
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Lockfiles + metadata (invalidates only when dependencies change)
+COPY unified_api/pyproject.toml unified_api/uv.lock ./unified_api/
+
+# Path-dependency packages: full trees needed for hatchling/setuptools builds during uv sync
+COPY doc_processing ./doc_processing
+COPY llm-service ./llm-service
+COPY core_rag_graph ./core_rag_graph
+COPY ra_literag ./ra_literag
+COPY temporial_graph ./temporial_graph
+COPY temporial_graph_openai ./temporial_graph_openai
+COPY temporial_graph_traversal ./temporial_graph_traversal
+
+WORKDIR /repo/unified_api
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev --no-install-project || uv sync --no-dev --no-install-project
+
+# Unified API package + any remaining repo files (configs, etc.)
+WORKDIR /repo
+COPY unified_api ./unified_api
+
+WORKDIR /repo/unified_api
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev || uv sync --no-dev
+
+EXPOSE 8000
+
+CMD ["sh", "-c", "mkdir -p /repo/unified_api/logs && set -o pipefail && uv run uvicorn unified_api.main:app --host 0.0.0.0 --port 8000 --workers 1 2>&1 | tee -a /repo/unified_api/logs/uvicorn.log"]

@@ -1,0 +1,25 @@
+defaults:
+  provider: openai
+  timeout_seconds: 15
+
+use_cases:
+  answer_generation:
+    provider: openai
+    model: gpt-4o-mini
+    reasoning_effort: medium
+    response_format:
+      type: json_object
+
+  query_parsing:
+    provider: openai
+    model: gpt-4o-mini
+    reasoning_effort: low
+    response_format:
+      type: json_object
+
+  reference_disambiguation:
+    provider: openai
+    model: gpt-4o-mini
+    reasoning_effort: high
+    response_format:
+      type: json_object

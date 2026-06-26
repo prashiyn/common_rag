@@ -1,0 +1,673 @@
+{
+  "components": {
+    "schemas": {
+      "CollectionMetadata": {
+        "properties": {
+          "chunk_count": {
+            "title": "Chunk Count",
+            "type": "integer"
+          },
+          "document_count": {
+            "title": "Document Count",
+            "type": "integer"
+          },
+          "earliest_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Earliest Timestamp"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "latest_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Timestamp"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "document_count",
+          "chunk_count"
+        ],
+        "title": "CollectionMetadata",
+        "type": "object"
+      },
+      "CollectionSummary": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "CollectionSummary",
+        "type": "object"
+      },
+      "ContextEvidenceItem": {
+        "properties": {
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "content_snippet": {
+            "title": "Content Snippet",
+            "type": "string"
+          },
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "section_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Label"
+          },
+          "section_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Title"
+          },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "title_summary": {
+            "title": "Title Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "document_id",
+          "chunk_id",
+          "timestamp",
+          "section_title",
+          "section_label",
+          "title_summary",
+          "content_snippet"
+        ],
+        "title": "ContextEvidenceItem",
+        "type": "object"
+      },
+      "ContextSummary": {
+        "properties": {
+          "chunk_count": {
+            "title": "Chunk Count",
+            "type": "integer"
+          },
+          "document_count": {
+            "title": "Document Count",
+            "type": "integer"
+          },
+          "event_count": {
+            "title": "Event Count",
+            "type": "integer"
+          },
+          "reference_count": {
+            "title": "Reference Count",
+            "type": "integer"
+          },
+          "table_count": {
+            "title": "Table Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "document_count",
+          "chunk_count",
+          "event_count",
+          "reference_count",
+          "table_count"
+        ],
+        "title": "ContextSummary",
+        "type": "object"
+      },
+      "GetOrCreateCollectionRequest": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "collection_id"
+        ],
+        "title": "GetOrCreateCollectionRequest",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "QueryAnswer": {
+        "properties": {
+          "confidence": {
+            "title": "Confidence",
+            "type": "number"
+          },
+          "context_summary": {
+            "title": "Context Summary",
+            "type": "string"
+          },
+          "direct_answer": {
+            "title": "Direct Answer",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "supporting_facts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Supporting Facts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "question",
+          "direct_answer",
+          "confidence",
+          "context_summary"
+        ],
+        "title": "QueryAnswer",
+        "type": "object"
+      },
+      "QueryContext": {
+        "properties": {
+          "documents": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Documents",
+            "type": "array"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/ContextEvidenceItem"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "reference_traces": {
+            "items": {
+              "$ref": "#/components/schemas/ReferenceTraceItem"
+            },
+            "title": "Reference Traces",
+            "type": "array"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ContextSummary"
+          },
+          "table_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/TableEvidenceItem"
+            },
+            "title": "Table Evidence",
+            "type": "array"
+          }
+        },
+        "required": [
+          "summary"
+        ],
+        "title": "QueryContext",
+        "type": "object"
+      },
+      "QueryRequest": {
+        "properties": {
+          "collection": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Collection"
+          },
+          "question": {
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "section_hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Hint"
+          },
+          "strict_reference_resolution": {
+            "default": false,
+            "title": "Strict Reference Resolution",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "QueryRequest",
+        "type": "object"
+      },
+      "QueryResult": {
+        "properties": {
+          "answer": {
+            "$ref": "#/components/schemas/QueryAnswer"
+          },
+          "context": {
+            "$ref": "#/components/schemas/QueryContext"
+          },
+          "execution": {
+            "additionalProperties": true,
+            "title": "Execution",
+            "type": "object"
+          },
+          "parsed_query": {
+            "additionalProperties": true,
+            "title": "Parsed Query",
+            "type": "object"
+          },
+          "plan": {
+            "additionalProperties": true,
+            "title": "Plan",
+            "type": "object"
+          }
+        },
+        "required": [
+          "parsed_query",
+          "plan",
+          "execution",
+          "context",
+          "answer"
+        ],
+        "title": "QueryResult",
+        "type": "object"
+      },
+      "ReferenceTraceItem": {
+        "properties": {
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "reference_text": {
+            "title": "Reference Text",
+            "type": "string"
+          },
+          "reference_type": {
+            "title": "Reference Type",
+            "type": "string"
+          },
+          "resolved": {
+            "title": "Resolved",
+            "type": "boolean"
+          },
+          "source_chunk_id": {
+            "title": "Source Chunk Id",
+            "type": "string"
+          },
+          "target_chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Chunk Id"
+          },
+          "target_document_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Document Id"
+          },
+          "target_label": {
+            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_chunk_id",
+          "reference_text",
+          "reference_type",
+          "target_label",
+          "resolved",
+          "reason"
+        ],
+        "title": "ReferenceTraceItem",
+        "type": "object"
+      },
+      "TableEvidenceItem": {
+        "properties": {
+          "collection_id": {
+            "title": "Collection Id",
+            "type": "string"
+          },
+          "document_id": {
+            "title": "Document Id",
+            "type": "string"
+          },
+          "source_chunk_id": {
+            "title": "Source Chunk Id",
+            "type": "string"
+          },
+          "target_chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Chunk Id"
+          },
+          "target_label": {
+            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collection_id",
+          "document_id",
+          "source_chunk_id",
+          "target_chunk_id",
+          "target_label"
+        ],
+        "title": "TableEvidenceItem",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Reference-Aware Query Engine",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/collections": {
+      "get": {
+        "operationId": "list_collections_collections_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CollectionSummary"
+                  },
+                  "title": "Response List Collections Collections Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Collections",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/collections/get-or-create": {
+      "post": {
+        "operationId": "get_or_create_collection_collections_get_or_create_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetOrCreateCollectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionSummary"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Or Create Collection",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/collections/{collection_id}": {
+      "get": {
+        "operationId": "get_collection_metadata_collections__collection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection_id",
+            "required": true,
+            "schema": {
+              "title": "Collection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionMetadata"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Collection Metadata",
+        "tags": [
+          "collections"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/query/ask": {
+      "post": {
+        "operationId": "ask_query_ask_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ask",
+        "tags": [
+          "query"
+        ]
+      }
+    }
+  }
+}

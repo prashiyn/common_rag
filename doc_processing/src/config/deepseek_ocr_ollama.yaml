@@ -1,0 +1,7 @@
+# DeepSeek-OCR optional overrides. Model/provider/timeouts: `src/config/llm_config.yaml` → `ocr_deepseek`.
+# API contract: `llm_service_openapi.json` (POST /llm/complete).
+# Prerequisite: models available to llm-service (e.g. ollama pull deepseek-ocr:latest).
+pipeline:
+  ocr_api:
+    use_case: ocr_deepseek
+    request_timeout: 300

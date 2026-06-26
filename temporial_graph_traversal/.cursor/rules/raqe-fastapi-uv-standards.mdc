@@ -1,0 +1,38 @@
+---
+description: Enforce FastAPI-first RAQE architecture with uv project management, centralized config.py settings, and .env.example for all required environment variables.
+alwaysApply: true
+---
+
+# RAQE FastAPI Project Standards
+
+## Platform and Packaging
+
+- Build this project as a FastAPI server.
+- Use `uv` for package and project management (dependency add/sync/run workflows).
+- Keep Python dependencies and scripts aligned to `uv` usage patterns.
+
+## Configuration and Environment
+
+- Use `config.py` as the single source of truth for runtime configuration loading.
+- Keep secrets and environment-specific values out of source code.
+- Maintain `.env.example` with every required environment variable and safe placeholder defaults.
+- Whenever a new env var is introduced, update both `config.py` and `.env.example` in the same change.
+
+## RAQE Architecture Requirements
+
+- Preserve collection-aware graph traversal with `Collection -> Document -> Section` hierarchy.
+- Keep temporal document metadata fields: `period`, `fiscal_year`, `timestamp`.
+- Maintain structure-aware traversal across `Section`, `Table`, and `Appendix` references.
+- Keep query flow explicit: parse -> collection/time filter -> plan -> execute traversal -> build context -> answer.
+
+## FastAPI API Contract
+
+- Expose query-serving behavior through FastAPI endpoints.
+- Keep request parsing, planning, execution, and response generation modular (agent/query engine layering).
+- Prefer small, composable functions for parser, planner, executor, and context/answer generation.
+
+## Quality Bar
+
+- Ensure new code remains collection-scoped and time-aware.
+- Keep cypher/graph operations aligned with the documented schema.
+- Avoid introducing alternate config systems when `config.py` already covers the need.

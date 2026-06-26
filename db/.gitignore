@@ -3,13 +3,21 @@
 !postgres_data/
 !chroma_data/
 !neo4j_data/
+!core_rag_graph/
+!ollama_data/
 
 postgres_data/*
 chroma_data/*
 neo4j_data/*
+ollama_data/*
+core_rag_graph/*
+!core_rag_graph/data/
+core_rag_graph/data/*
 
 !postgres_data/.gitkeep
 !chroma_data/.gitkeep
 !neo4j_data/.gitkeep
 !neo4j_data/logs/
 !neo4j_data/logs/.gitkeep
+!ollama_data/.gitkeep
+!core_rag_graph/data/.gitkeep

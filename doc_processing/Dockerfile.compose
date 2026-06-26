@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# OpenCV (unstructured / cv2) needs X11-ish shared libs not present on python-slim.
+# ffmpeg: pydub looks for ffmpeg/avconv on PATH; without it you get RuntimeWarning at import/use.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    libxcb1 \
+    libgomp1 \
+    libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir uv
+
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never
+
+# Cache dependency install until lockfiles change (not on every source edit).
+COPY pyproject.toml uv.lock README.md ./
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev --no-install-project
+
+COPY . .
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
+
+EXPOSE 8000
+
+CMD ["sh", "-c", "mkdir -p /app/logs && set -o pipefail && uv run uvicorn doc_processing.main:app --app-dir src --host 0.0.0.0 --port 8000 2>&1 | tee -a /app/logs/uvicorn.log"]

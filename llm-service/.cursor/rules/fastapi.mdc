@@ -1,0 +1,10 @@
+---
+description: FastAPI conventions for llm-service
+globs: "**/main.py,**/routers/**/*.py"
+alwaysApply: false
+---
+
+- Keep `/llm` API contract stable and backward compatible.
+- Use Pydantic request/response models for all route payloads.
+- Return 422 for request validation errors and 502 for upstream/provider failures.
+- Keep route handlers thin; business logic belongs in `llms/*`.

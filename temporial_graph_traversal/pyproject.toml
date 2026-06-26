@@ -1,0 +1,22 @@
+[project]
+name = "reference-aware-query-engine"
+version = "0.1.0"
+description = "Reference-Aware Query Engine (RAQE) FastAPI server"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "pydantic-settings>=2.4.0",
+  "neo4j>=5.23.0",
+  "pytest>=8.3.0",
+  "httpx>=0.27.0",
+  "pyyaml>=6.0.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.26.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["raqe"]

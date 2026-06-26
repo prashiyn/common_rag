@@ -1,0 +1,12 @@
+---
+description: Guardrails for /llm contract stability
+globs: "**/routers/llm.py,**/tests/test_openapi_contract.py,openapi.snapshot.json"
+alwaysApply: true
+---
+
+- Do not change `/llm` paths, request fields, or response field names without explicit approval.
+- Any schema change must update `openapi.snapshot.json` intentionally.
+- Keep behavior parity for:
+  - structured responses (`response_format`)
+  - reasoning (`reasoning_effort`)
+  - embeddings (`/llm/embeddings`)

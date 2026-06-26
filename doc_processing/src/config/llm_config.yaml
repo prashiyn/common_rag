@@ -1,0 +1,68 @@
+# Remote llm-service runtime config for doc-processing use-cases.
+# Contract for /llm/* requests: `llm_service_openapi.json` (repo root).
+# Each use-case can have its own provider/model without hardcoding in code.
+
+service:
+  # Optional request timeout (seconds) for llm-service calls.
+  timeout_seconds: 120
+
+use_cases:
+  # Default text completion for generic runtime calls.
+  default_complete:
+    provider: "groq"
+    model: "qwen/qwen3-32b"
+
+  # Coreference resolution in chunking pipeline.
+  chunk_coreference:
+    provider: "groq"
+    model: "openai/gpt-oss-120b"
+
+  # Section-level summarization in chunking pipeline.
+  chunk_section_summary:
+    provider: "groq"
+    model: "qwen/qwen3-32b"
+
+  # Table-to-text extraction in chunking pipeline.
+  chunk_table_extraction:
+    provider: "groq"
+    model: "openai/gpt-oss-120b"
+    response_format:
+      type: json_object
+
+  # Image caption generation in chunking pipeline.
+  chunk_image_caption:
+    provider: "groq"
+    model: "meta-llama/llama-4-scout-17b-16e-instruct"
+    response_format:
+      type: json_object
+
+  # Cross-reference extraction for chunk references.
+  chunk_reference_extraction:
+    provider: "groq"
+    model: "qwen/qwen3-32b"
+
+  # GLM-OCR vision calls via llm-service (CompletionRequest in llm_service_openapi.json).
+  ocr_glm:
+    provider: "ollama"
+    model: "ollama/glm-ocr:latest"
+    timeout_seconds: 300
+
+  # DeepSeek-OCR vision calls via llm-service.
+  ocr_deepseek:
+    provider: "ollama"
+    model: "ollama/deepseek-ocr:latest"
+    timeout_seconds: 300
+
+  # Docling PDF VLM (granite_docling preset) via direct Ollama API_OLLAMA (see OLLAMA_BASE_URL).
+  # Model id is the native Ollama name (ollama/ prefix in llm-service models is stripped in code).
+  docling_pdf_vlm:
+    model: "ibm/granite-docling:latest"
+    timeout_seconds: 120
+    api_params:
+      temperature: 0.0
+      max_tokens: 8192
+
+  # Docling picture description (granite_vision preset) via direct Ollama API_OLLAMA.
+  docling_picture_description:
+    model: "ibm/granite3.3-vision:2b"
+    timeout_seconds: 120

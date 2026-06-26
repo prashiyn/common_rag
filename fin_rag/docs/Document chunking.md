@@ -1,0 +1,2 @@
+## NOTE: Document chunking is done in the LLM service and this service will receive the chunks from there
+The chunks are defined in that service and the chunks we recieeve here align with what fin_rag requires

@@ -1,0 +1,40 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Local secrets — copy from `.env.example` at repo root
+/.env
+
+# Per-service overrides (tracked templates: `.env.example` / `.env.sample`)
+/doc_processing/.env
+/llm-service/.env
+/core_rag_graph/.env
+/fin_rag/.env
+/ra_literag/.env
+/temporial_graph/.env
+/temporial_graph_openai/.env
+/temporial_graph_traversal/.env
+
+# Per-service Docker bind-mount logs (keep empty dirs via .gitkeep)
+/doc_processing/logs/*
+!/doc_processing/logs/.gitkeep
+/llm-service/logs/*
+!/llm-service/logs/.gitkeep
+/core_rag_graph/logs/*
+!/core_rag_graph/logs/.gitkeep
+/fin_rag/logs/*
+!/fin_rag/logs/.gitkeep
+/ra_literag/logs/*
+!/ra_literag/logs/.gitkeep
+/temporial_graph/logs/*
+!/temporial_graph/logs/.gitkeep
+/temporial_graph_openai/logs/*
+!/temporial_graph_openai/logs/.gitkeep
+/temporial_graph_traversal/logs/*
+!/temporial_graph_traversal/logs/.gitkeep
+
+# Unified API
+/unified_api/logs/*
+!/unified_api/logs/.gitkeep
+/unified_api/.env
+/unified_api/.venv/

@@ -1,0 +1,12 @@
+# GLM-OCR optional overrides. Model/provider/timeouts: `src/config/llm_config.yaml` → `ocr_glm`.
+# API contract: `llm_service_openapi.json` (POST /llm/complete).
+# Prerequisite: models available to llm-service (e.g. ollama pull glm-ocr:latest).
+pipeline:
+  maas:
+    enabled: false
+
+  ocr_api:
+    use_case: ocr_glm
+    request_timeout: 300
+
+  enable_layout: false

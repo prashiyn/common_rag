@@ -1,0 +1,11 @@
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/logs/*.log
+**/.env
+**/.git/
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/data/temp/

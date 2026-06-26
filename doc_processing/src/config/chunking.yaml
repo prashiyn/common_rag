@@ -1,0 +1,17 @@
+# Chunking pipeline configuration.
+# Controls non-LLM chunking parameters.
+# LLM model/provider selection is configured in `src/config/llm_config.yaml`.
+
+params:
+  # Maximum characters per chunk after splitting bundles.
+  max_chunk_chars: 900
+
+  # Minimum characters for a block before forcing a new chunk.
+  min_block_chars: 200
+
+  # Cosine-similarity threshold for deduplication (0–1).
+  dedup_similarity_threshold: 0.7
+
+  # Number of previous chunks used as coreference context.
+  coreference_context_k: 4
+

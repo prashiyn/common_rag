@@ -1,0 +1,47 @@
+[project]
+name = "doc-processing"
+version = "0.1.0"
+description = "Document processing, conversions and chunking for RAG"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "docling[vlm,easyocr,xbrl] >= 2.80.0",
+    "unstructured[all-docs]",
+    "ixbrl-parse",
+    "markitdown[all]",
+    "lxml>=5",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "requests>=2.28",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "pandas>=2.0",
+    "mistletoe>=1.3",
+    "pymupdf>=1.24",
+    "scikit-learn>=1.5",
+    "ImageHash>=4.3.2",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.28",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling>=1.26.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/doc_processing"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
