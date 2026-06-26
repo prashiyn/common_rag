@@ -24,6 +24,7 @@ Interactive API docs (when the server is running): [http://127.0.0.1:8000/docs](
 | [unified-api/configuration.md](./unified-api/configuration.md) | Operators | Environment variables |
 | [unified-api/api-overview.md](./unified-api/api-overview.md) | Integrators | Route prefixes and health endpoints |
 | [unified-api/migration-notes.md](./unified-api/migration-notes.md) | Integrators | Old microservice URLs → unified paths |
+| [repository-layout.md](./repository-layout.md) | Maintainers | Monorepo directory layout decision (Option A vs `packages/`) |
 | [services/](./services/) | Per-feature | Deep dives per merged service |
 | [openapi/](./openapi/) | Integrators | Frozen OpenAPI snapshots + live spec notes |
 
