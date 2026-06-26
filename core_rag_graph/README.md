@@ -1,3 +1,9 @@
+# Moved
+
+This service now lives in the [common_rag](https://github.com/prashiyn/common_rag) monorepo under `core_rag_graph/`.
+
+---
+
 # core_rag_graph
 
 > **Canonical docs:** [`docs/services/core-rag-graph/`](../docs/services/core-rag-graph/)  

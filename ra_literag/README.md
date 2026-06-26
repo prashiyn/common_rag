@@ -1,3 +1,9 @@
+# Moved
+
+This service now lives in the [common_rag](https://github.com/prashiyn/common_rag) monorepo under `ra_literag/`.
+
+---
+
 > **Canonical docs for the FastAPI wrapper:** [`docs/services/ra-literag/`](../docs/services/ra-literag/)  
 > **Unified API prefix:** `/ra-literag` on port **8000**  
 > The content below is the upstream RAG-Anything framework README.

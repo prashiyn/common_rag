@@ -1,3 +1,9 @@
+# Moved
+
+This service now lives in the [common_rag](https://github.com/prashiyn/common_rag) monorepo under `doc_processing/`.
+
+---
+
 # doc-processing
 
 > **Canonical docs:** [`docs/services/doc-processing/`](../docs/services/doc-processing/)  
