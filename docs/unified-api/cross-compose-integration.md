@@ -2,6 +2,8 @@
 
 How an **external service** (launched in a **separate** Docker Compose project or container) calls the unified API from this repository.
 
+**Default host ports (test stack):** unified API **18000**, gateway **18080**. Live stack: **8000** / **8080**.
+
 ## Context
 
 The `common` stack runs `unified_api` on port **8000** inside the compose network. Each `docker compose up` creates its **own default network**. Containers in project B **cannot** resolve compose service names from project A (for example `unified_api`) unless you explicitly connect the networks.
@@ -27,11 +29,14 @@ An external project must use one of the options below.
 Typical environment variables in the **consumer** service:
 
 ```bash
-UNIFIED_API_BASE_URL=http://<reachable-host>:8000
-LLM_SERVICE_BASE_URL=http://<reachable-host>:8000/llm-service
-```
+# Test stack (default dev — host port 18000)
+UNIFIED_API_BASE_URL=http://host.docker.internal:18000
+LLM_SERVICE_BASE_URL=http://host.docker.internal:18000/llm-service
 
-Replace `<reachable-host>` with the hostname from the chosen option below.
+# Live stack (host port 8000)
+# UNIFIED_API_BASE_URL=http://host.docker.internal:8000
+# LLM_SERVICE_BASE_URL=http://host.docker.internal:8000/llm-service
+```
 
 ---
 
@@ -39,8 +44,9 @@ Replace `<reachable-host>` with the hostname from the chosen option below.
 
 | | Option 1: Host port | Option 2: Shared network | Option 3: Reverse proxy |
 |--|---------------------|--------------------------|-------------------------|
-| **Reachability** | Published host port `8000` | Shared Docker network | Stable hostname / TLS URL |
-| **Consumer URL** | `http://host.docker.internal:8000` | `http://unified-api:8000` | `https://rag-api.example.com` |
+| **Reachability** | Published host port | Shared Docker network | Stable hostname / TLS URL |
+| **Consumer URL (test stack)** | `http://host.docker.internal:18000` | N/A (use Option 3 gateway on test stack) | `http://host.docker.internal:18080` |
+| **Consumer URL (live stack)** | `http://host.docker.internal:8000` | `http://unified-api:8000` | `http://127.0.0.1:8080` or `https://rag-api.example.com` |
 | **Changes to `common` stack** | None (port already published) | Add external network + attach `unified_api` | Add proxy in front of `unified_api` |
 | **Best for** | Dev, quick integration, separate repos | Co-located services on one Docker host | Multi-host, production, TLS |
 | **DNS caveat** | Use `host.docker.internal` (+ Linux `extra_hosts`) | Use **container name** `unified-api`, not service name `unified_api` | Proxy handles routing |
@@ -49,7 +55,7 @@ Replace `<reachable-host>` with the hostname from the chosen option below.
 
 ## Option 1 — Host port (simplest)
 
-The unified API already publishes port **8000** on the Docker host (`8000:8000` in `docker-compose.yml`). External containers reach it via the **host**, not internal compose DNS.
+The unified API publishes a host port mapped to container port **8000** internally (`18000:8000` test stack, `8000:8000` live stack). External containers reach it via the **host**, not internal compose DNS.
 
 ### Architecture
 
@@ -75,8 +81,8 @@ services:
   my_service:
     image: my-app:latest
     environment:
-      UNIFIED_API_BASE_URL: http://host.docker.internal:8000
-      LLM_SERVICE_BASE_URL: http://host.docker.internal:8000/llm-service
+      UNIFIED_API_BASE_URL: http://host.docker.internal:18000
+      LLM_SERVICE_BASE_URL: http://host.docker.internal:18000/llm-service
     extra_hosts:
       # Required on Linux; Docker Desktop provides this automatically on Mac/Windows
       - "host.docker.internal:host-gateway"
@@ -84,16 +90,16 @@ services:
 
 ### Base URLs
 
-| Caller location | Base URL |
-|-----------------|----------|
-| Host machine (curl, IDE) | `http://127.0.0.1:8000` |
-| Container on same Docker host | `http://host.docker.internal:8000` |
+| Caller location | Base URL (test stack) | Base URL (live stack) |
+|-----------------|----------------------|----------------------|
+| Host machine (curl, IDE) | `http://127.0.0.1:18000` | `http://127.0.0.1:8000` |
+| Container on same Docker host | `http://host.docker.internal:18000` | `http://host.docker.internal:8000` |
 
-### Example requests
+### Example requests (test stack)
 
 ```bash
-curl -fsS http://host.docker.internal:8000/health
-curl -fsS http://host.docker.internal:8000/llm-service/health
+curl -fsS http://host.docker.internal:18000/health
+curl -fsS http://host.docker.internal:18000/llm-service/health
 ```
 
 ### Pros and cons
@@ -107,7 +113,7 @@ curl -fsS http://host.docker.internal:8000/llm-service/health
 ```bash
 docker run --rm --add-host=host.docker.internal:host-gateway \
   curlimages/curl:latest \
-  curl -fsS http://host.docker.internal:8000/health
+  curl -fsS http://host.docker.internal:18000/health
 ```
 
 ---
@@ -222,24 +228,26 @@ External compose projects join the shared Docker network **`rag_shared`** and ca
 
 ### Start the gateway (this repo)
 
-From repo root, with `.env` configured:
+From repo root, with `.env` configured (test stack):
 
 ```bash
-docker compose --env-file .env up -d unified_api unified_api_gateway
+docker compose -f docker-compose-test.yaml --env-file .env up -d unified_api unified_api_gateway
 ```
 
 Verify:
 
 ```bash
-# Via gateway (recommended for external consumers)
-curl -fsS http://127.0.0.1:8080/health
-curl -fsS http://127.0.0.1:8080/llm-service/health
+# Via gateway (recommended for external consumers — test stack)
+curl -fsS http://127.0.0.1:18080/health
+curl -fsS http://127.0.0.1:18080/llm-service/health
 
-# Direct (dev/debug only — same host)
-curl -fsS http://127.0.0.1:8000/health
+# Direct (dev/debug — test stack)
+curl -fsS http://127.0.0.1:18000/health
 ```
 
-Default host port for the gateway is **8080** (`UNIFIED_API_GATEWAY_PORT` in `.env.example`). `unified_api` still publishes **8000** for local development; point **external** services at the gateway only.
+Live stack: replace `18000` → `8000`, `18080` → `8080`, and use `docker compose` without `-f docker-compose-test.yaml`.
+
+Default host port for the gateway is **18080** (test) or **8080** (live). Point **external** services at the gateway, not direct `unified_api` port.
 
 ### Configure `.env`
 
@@ -353,7 +361,7 @@ Certs and `ssl.conf` are gitignored — do not commit private keys.
 1. **Do not** set `http://unified_api:8000` in an external compose file unless that service joins the same compose project or shared network (Option 2).
 2. **Do not** point consumers at internal database hostnames (`postgres`, `neo4j`, `chroma`) unless you intentionally share infrastructure and have joined networks — normally consumers call **HTTP APIs only**.
 3. **Do not** use legacy pre-unification OpenAPI snapshots (`docs/openapi/llm-service.json` without the `/llm-service` prefix). Use [openapi.json](../openapi/openapi.json) or [by-service/](../openapi/by-service/).
-4. **Do not** assume the test stack port — live compose uses **8000**; `docker-compose-test.yaml` uses **18000** on the host.
+4. **Do not** confuse host ports — test stack uses **18000** / **18080**; live stack uses **8000** / **8080**. Container internal port is always **8000**.
 
 ---
 
@@ -361,7 +369,7 @@ Certs and `ssl.conf` are gitignored — do not commit private keys.
 
 | Situation | Option |
 |-----------|--------|
-| Local dev, separate repos, fastest path | **Option 1** — `host.docker.internal:8000` |
+| Local dev, separate repos, fastest path | **Option 1** — `host.docker.internal:18000` (test) or `:8000` (live) |
 | Long-running co-located services on one server | **Option 2** — shared network `rag_shared` |
 | Remote machine, TLS, or centralized ingress | **Option 3** — reverse proxy |
 
@@ -376,18 +384,20 @@ You can start with Option 1 and move to Option 2 or 3 without changing API paths
 Before starting a dependent service:
 
 ```bash
-# Live stack (host)
-curl -fsS http://127.0.0.1:8000/health
+# Test stack (host — default)
+curl -fsS http://127.0.0.1:18000/health
 
-# From consumer container (Option 1)
-curl -fsS http://host.docker.internal:8000/health
+# From consumer container (Option 1 — test stack)
+curl -fsS http://host.docker.internal:18000/health
 
-# From consumer container (Option 2)
+# From consumer container (Option 2 — live stack + rag_shared)
 curl -fsS http://unified-api:8000/health
 
-# Via gateway (Option 3 — recommended for external stacks)
-curl -fsS http://127.0.0.1:8080/health
-curl -fsS http://unified-api-gateway/health   # from container on rag_shared
+# Via gateway (Option 3 — test stack)
+curl -fsS http://127.0.0.1:18080/health
+curl -fsS http://host.docker.internal:18080/health
+
+# Live stack equivalents: 18000→8000, 18080→8080
 ```
 
 Optional: wait for `unified_api` health in the consumer compose:

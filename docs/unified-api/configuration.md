@@ -40,7 +40,7 @@ Each merged service still reads configuration through its own settings module at
 
 When `LLM_CLIENT_MODE` is unset, services auto-select `inprocess` if `LLM_SERVICE_BASE_URL` starts with `http://localhost` or `http://127.0.0.1`. External callers (e.g. `fin_rag` at `http://unified_api:8000/llm-service`) always use HTTP.
 
-Inside Docker, `localhost:8000` refers to the same `unified_api` container. External clients use the host-mapped port (`8000` live, `18000` test).
+Inside Docker, `localhost:8000` refers to the same `unified_api` container (internal listen port). External clients on the **host** use the published port: **18000** (test stack, default) or **8000** (live stack).
 
 ## LLM provider keys (`llm-service`)
 

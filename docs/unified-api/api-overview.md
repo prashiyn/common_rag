@@ -1,7 +1,9 @@
 # Unified API overview
 
-Base URL (live stack): `http://127.0.0.1:8000`  
-Base URL (test stack): `http://127.0.0.1:18000`
+**Base URL (default — test stack):** `http://127.0.0.1:18000`  
+**Gateway (test stack):** `http://127.0.0.1:18080`  
+**Base URL (live stack):** `http://127.0.0.1:8000`  
+**Gateway (live stack):** `http://127.0.0.1:8080`
 
 OpenAPI: `GET /openapi.json` — Swagger UI at `/docs`
 
@@ -18,18 +20,20 @@ OpenAPI: `GET /openapi.json` — Swagger UI at `/docs`
 | temporial_graph_openai | `/temporal-graph-openai` | `GET /temporal-graph-openai/health` |
 | temporial_graph_traversal | `/temporal-graph-traversal` | `GET /temporal-graph-traversal/health` |
 
-## Smoke-test curls (live stack)
+## Smoke-test curls (test stack — port 18000)
 
 ```bash
-curl -fsS http://127.0.0.1:8000/health
-curl -fsS http://127.0.0.1:8000/llm-service/health
-curl -fsS http://127.0.0.1:8000/doc-processing/health
-curl -fsS http://127.0.0.1:8000/core-rag/health
-curl -fsS http://127.0.0.1:8000/ra-literag/health
-curl -fsS http://127.0.0.1:8000/temporal-graph/health
-curl -fsS http://127.0.0.1:8000/temporal-graph-openai/health
-curl -fsS http://127.0.0.1:8000/temporal-graph-traversal/health
+curl -fsS http://127.0.0.1:18000/health
+curl -fsS http://127.0.0.1:18000/llm-service/health
+curl -fsS http://127.0.0.1:18000/doc-processing/health
+curl -fsS http://127.0.0.1:18000/core-rag/health
+curl -fsS http://127.0.0.1:18000/ra-literag/health
+curl -fsS http://127.0.0.1:18000/temporal-graph/health
+curl -fsS http://127.0.0.1:18000/temporal-graph-openai/health
+curl -fsS http://127.0.0.1:18000/temporal-graph-traversal/health
 ```
+
+Live stack: same paths on port **8000**.
 
 ## Primary API examples
 
@@ -44,11 +48,13 @@ curl -fsS http://127.0.0.1:8000/temporal-graph-traversal/health
 | Ingest job | `POST /temporal-graph-openai/v1/ingest/jobs` |
 | RAQE ask | `POST /temporal-graph-traversal/query/ask` |
 
+Full URL example (test stack): `POST http://127.0.0.1:18000/llm-service/llm/complete`
+
 Request and response **schemas are unchanged** from the standalone services; only the URL prefix changed. See [migration-notes.md](./migration-notes.md).
 
 ## OpenAPI sources
 
-- **Live (authoritative):** `GET /openapi.json` on the running unified server (~79 paths).
+- **Live (authoritative):** `GET http://127.0.0.1:18000/openapi.json` on the running test stack (~81 paths).
 - **Frozen snapshots:** [../openapi/](../openapi/) — pre-unification path layouts for contract comparison.
 
 ## Middleware notes

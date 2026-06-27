@@ -2,6 +2,8 @@
 
 How to reach the unified API from your machine, from other Docker containers, and from external compose stacks.
 
+**Default host port:** **18000** (`docker-compose-test.yaml`). Gateway: **18080**. Live stack uses **8000** / **8080** when those ports are free on the host.
+
 ## Prerequisites
 
 1. Copy root env template and set secrets:
@@ -19,11 +21,12 @@ cp .env.example .env
 
 | Who is calling | Recommended base URL | Port |
 |----------------|---------------------|------|
-| You (browser, curl, IDE) on the host | `http://127.0.0.1:8000` | **8000** |
-| External compose stacks (Option 3 gateway) | `http://unified-api-gateway` on network `rag_shared`, or `http://127.0.0.1:8080` from host | **8080** |
-| Same compose project (e.g. `fin_rag`) | `http://unified_api:8000` | internal |
-| Test stack (`docker-compose-test.yaml`) | `http://127.0.0.1:18000` | **18000** |
-| Test gateway | `http://127.0.0.1:18080` | **18080** |
+| You (browser, curl, IDE) on the host | `http://127.0.0.1:18000` | **18000** |
+| Gateway from host (test stack) | `http://127.0.0.1:18080` | **18080** |
+| External compose stacks (Option 3 gateway, live stack) | `http://unified-api-gateway` on network `rag_shared`, or `http://127.0.0.1:8080` from host | **8080** |
+| Same compose project (e.g. `fin_rag`) | `http://unified_api:8000` | internal (container) |
+| Live stack (`docker-compose.yml`) | `http://127.0.0.1:8000` | **8000** |
+| Live gateway | `http://127.0.0.1:8080` | **8080** |
 
 API **paths are identical** on direct and gateway URLs — only the host/port changes.
 
@@ -31,32 +34,29 @@ API **paths are identical** on direct and gateway URLs — only the host/port ch
 
 ## Starting the service
 
-### Live stack (recommended)
+### Test stack (default — port 18000)
 
-**API only** (local development):
-
-```bash
-docker compose --env-file .env up -d unified_api
-```
-
-**API + gateway** (when external services consume unified API):
+Non-conflicting host ports; use when other services already bind 8000, 5432, 11434, etc.
 
 ```bash
-docker compose --env-file .env up -d unified_api unified_api_gateway
+docker compose -f docker-compose-test.yaml --env-file .env up -d unified_api unified_api_gateway
 ```
 
 This starts `postgres`, `neo4j`, `chroma`, and `ollama` automatically via `depends_on`.
 
-**Full stack** (includes `fin_rag`):
+### Live stack (port 8000)
+
+Use when default host ports are available:
 
 ```bash
+# API only
+docker compose --env-file .env up -d unified_api
+
+# API + gateway (external consumers)
+docker compose --env-file .env up -d unified_api unified_api_gateway
+
+# Full stack (includes fin_rag)
 docker compose --env-file .env up -d
-```
-
-### Test stack (non-conflicting ports)
-
-```bash
-docker compose -f docker-compose-test.yaml --env-file .env up -d unified_api unified_api_gateway
 ```
 
 ### Local development (no Docker for the API process)
@@ -64,54 +64,60 @@ docker compose -f docker-compose-test.yaml --env-file .env up -d unified_api uni
 Requires databases running via compose:
 
 ```bash
-docker compose --env-file .env up -d postgres neo4j chroma ollama
+docker compose -f docker-compose-test.yaml --env-file .env up -d postgres neo4j chroma ollama
 cd unified_api && uv sync && uv run uvicorn unified_api.main:app --host 0.0.0.0 --port 8000
 ```
+
+When running uvicorn on the host, use `http://127.0.0.1:8000` (not 18000).
 
 ---
 
 ## Verify the service is up
 
-### Root health
+### Root health (test stack — port 18000)
 
 ```bash
-curl -fsS http://127.0.0.1:8000/health
+curl -fsS http://127.0.0.1:18000/health
 # {"status":"ok","service":"unified-api"}
 ```
 
-### Per-service health (direct — port 8000)
+### Per-service health (direct — port 18000)
 
 ```bash
-curl -fsS http://127.0.0.1:8000/llm-service/health
-curl -fsS http://127.0.0.1:8000/doc-processing/health
-curl -fsS http://127.0.0.1:8000/core-rag/health
-curl -fsS http://127.0.0.1:8000/ra-literag/health
-curl -fsS http://127.0.0.1:8000/temporal-graph/health
-curl -fsS http://127.0.0.1:8000/temporal-graph-openai/health
-curl -fsS http://127.0.0.1:8000/temporal-graph-traversal/health
+curl -fsS http://127.0.0.1:18000/llm-service/health
+curl -fsS http://127.0.0.1:18000/doc-processing/health
+curl -fsS http://127.0.0.1:18000/core-rag/health
+curl -fsS http://127.0.0.1:18000/ra-literag/health
+curl -fsS http://127.0.0.1:18000/temporal-graph/health
+curl -fsS http://127.0.0.1:18000/temporal-graph-openai/health
+curl -fsS http://127.0.0.1:18000/temporal-graph-traversal/health
 ```
 
-### Via gateway (port 8080)
+### Via gateway (test stack — port 18080)
 
-Same paths, different port:
+Same paths, gateway port:
 
 ```bash
-curl -fsS http://127.0.0.1:8080/health
-curl -fsS http://127.0.0.1:8080/llm-service/health
+curl -fsS http://127.0.0.1:18080/health
+curl -fsS http://127.0.0.1:18080/llm-service/health
 ```
+
+### Live stack equivalents
+
+Replace `18000` → `8000` and `18080` → `8080` when using `docker-compose.yml`.
 
 ---
 
 ## Interactive docs and OpenAPI
 
-| Resource | URL (live stack) |
-|----------|------------------|
-| Swagger UI | [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) |
-| ReDoc | [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc) |
-| Live OpenAPI JSON | [http://127.0.0.1:8000/openapi.json](http://127.0.0.1:8000/openapi.json) |
-| Frozen spec (repo) | [../openapi/openapi.json](../openapi/openapi.json) |
+| Resource | URL (test stack) | URL (live stack) |
+|----------|------------------|------------------|
+| Swagger UI | [http://127.0.0.1:18000/docs](http://127.0.0.1:18000/docs) | [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) |
+| ReDoc | [http://127.0.0.1:18000/redoc](http://127.0.0.1:18000/redoc) | [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc) |
+| Live OpenAPI JSON | [http://127.0.0.1:18000/openapi.json](http://127.0.0.1:18000/openapi.json) | [http://127.0.0.1:8000/openapi.json](http://127.0.0.1:8000/openapi.json) |
+| Frozen spec (repo) | [../openapi/openapi.json](../openapi/openapi.json) | same |
 
-Gateway serves the same docs at port **8080** (e.g. `http://127.0.0.1:8080/docs`).
+Gateway serves the same docs at **18080** (test) or **8080** (live).
 
 ---
 
@@ -135,12 +141,12 @@ Full route list and examples: [api-overview.md](./api-overview.md).
 
 ## Calling from code
 
-### Host machine (Python example)
+### Host machine (Python example — test stack)
 
 ```python
 import httpx
 
-BASE = "http://127.0.0.1:8000"
+BASE = "http://127.0.0.1:18000"
 
 r = httpx.get(f"{BASE}/health")
 r.raise_for_status()
@@ -164,35 +170,31 @@ UNIFIED_API_BASE_URL=http://unified-api-gateway
 LLM_SERVICE_BASE_URL=http://unified-api-gateway/llm-service
 ```
 
-Join network `rag_shared` (see [cross-compose-integration.md](./cross-compose-integration.md)).
+From host with test stack gateway: `http://127.0.0.1:18080`. From another container on the same host: `http://host.docker.internal:18080` (see [cross-compose-integration.md](./cross-compose-integration.md)).
 
 ### Environment variable reference
 
 | Variable | Typical value | Used by |
 |----------|---------------|---------|
 | `UNIFIED_API_PUBLIC_URL` | `http://unified-api-gateway` | Documented consumer default (`.env.example`) |
-| `UNIFIED_API_GATEWAY_PORT` | `8080` | Host port for gateway |
-| `LLM_SERVICE_BASE_URL` | `http://unified_api:8000/llm-service` | `fin_rag` inside this compose file |
+| `UNIFIED_API_GATEWAY_PORT` | `8080` (live) / **18080** (test host) | Host port for gateway |
+| `LLM_SERVICE_BASE_URL` | `http://unified_api:8000/llm-service` | `fin_rag` inside this compose file (internal port always 8000) |
 
 ---
 
 ## Logs and troubleshooting
 
 ```bash
-# Follow unified API logs
-docker compose --env-file .env logs -f unified_api
-
-# Gateway logs
-docker compose --env-file .env logs -f unified_api_gateway
-
-# Container status
-docker compose --env-file .env ps
+# Test stack
+docker compose -f docker-compose-test.yaml --env-file .env logs -f unified_api
+docker compose -f docker-compose-test.yaml --env-file .env ps
 ```
 
 | Symptom | Check |
 |---------|--------|
-| Connection refused on `:8000` | `docker compose ps` — is `unified_api` healthy? |
-| Connection refused on `:8080` | Start `unified_api_gateway`; it depends on `unified_api` |
+| Connection refused on `:18000` | `docker compose -f docker-compose-test.yaml ps` — is `unified_api` healthy? |
+| Connection refused on `:18080` | Start `unified_api_gateway`; it depends on `unified_api` |
+| Port conflict on live stack `:8000` | Use test stack (`18000`) or free the conflicting host port |
 | Neo4j auth errors | `NEO4J_PASSWORD` in `.env` (≥ 8 chars); may need fresh Neo4j volume |
 | Slow first request | Ollama / model cold start; see [compose-runbook.md](../compose-runbook.md) |
 
@@ -201,11 +203,11 @@ docker compose --env-file .env ps
 ## Stop the service
 
 ```bash
-# Stop API + gateway, keep databases
-docker compose --env-file .env stop unified_api unified_api_gateway
+# Test stack — stop API + gateway, keep databases
+docker compose -f docker-compose-test.yaml --env-file .env stop unified_api unified_api_gateway
 
-# Stop everything
-docker compose --env-file .env down
+# Test stack — stop everything
+docker compose -f docker-compose-test.yaml --env-file .env down
 ```
 
 ---

@@ -1,6 +1,8 @@
 # Unified API — OpenAPI specifications
 
-Use these specs to generate clients, validate requests, or document integrations against the **unified API** on port **8000**.
+Use these specs to generate clients, validate requests, or document integrations against the **unified API**.
+
+**Default host access (test stack):** port **18000** — `http://127.0.0.1:18000`. Live stack: port **8000**.
 
 ## Files
 
@@ -29,13 +31,13 @@ All slices include `servers` for local and Docker Compose base URLs.
 
 ## Live spec (authoritative at runtime)
 
-When the server is running:
+When the server is running (test stack):
 
 ```bash
-curl -s http://127.0.0.1:8000/openapi.json | jq '.info.title, (.paths | keys | length)'
+curl -s http://127.0.0.1:18000/openapi.json | jq '.info.title, (.paths | keys | length)'
 ```
 
-Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+Swagger UI: [http://127.0.0.1:18000/docs](http://127.0.0.1:18000/docs) (live stack: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs))
 
 Frozen files under `docs/openapi/` are regenerated from code and checked in CI/tests.
 
@@ -61,8 +63,12 @@ uv run python scripts/export_openapi.py --check
 
 | Environment | Base URL |
 |-------------|----------|
-| Local | `http://127.0.0.1:8000` |
-| Docker Compose (e.g. `fin_rag`) | `http://unified_api:8000` |
+| Host (test stack — default) | `http://127.0.0.1:18000` |
+| Host (live stack) | `http://127.0.0.1:8000` |
+| Gateway (test stack) | `http://127.0.0.1:18080` |
+| Gateway (live stack) | `http://127.0.0.1:8080` |
+| Docker Compose (e.g. `fin_rag`, internal) | `http://unified_api:8000` |
+| External container → host (test stack) | `http://host.docker.internal:18000` |
 
 Append the route path from the spec (paths already include the service prefix).
 
