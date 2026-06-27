@@ -85,4 +85,6 @@ openapi-generator generate \
 
 ## Legacy standalone specs
 
-Pre-unification snapshots (paths **without** unified prefixes) remain in [../openapi/](../openapi/README.md) for contract comparison. Do **not** use them for new integrations — use `unified-api.json` or `by-service/` instead.
+Pre-unification snapshots (paths **without** unified prefixes) remain in [../openapi/](../openapi/README.md) for contract comparison. Do **not** use them for new integrations — use `openapi.json` or `by-service/` instead.
+
+Cross-compose networking (separate Docker projects): [cross-compose-integration.md](./cross-compose-integration.md).

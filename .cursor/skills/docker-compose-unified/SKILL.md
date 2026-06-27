@@ -20,6 +20,7 @@ Canonical documentation: [docs/README.md](../../docs/README.md)
 | Compose service | Host port (live) | Host port (test) | Notes |
 |-----------------|------------------|------------------|-------|
 | `unified_api` | `8000` | `18000` | Merges llm-service, doc_processing, core_rag_graph, ra_literag, temporial_graph, temporial_graph_openai, temporial_graph_traversal |
+| `unified_api_gateway` | `8080` | `18080` | nginx reverse proxy for external compose stacks (Option 3) |
 | `fin_rag` | `6005` | `16005` | Separate service; calls `http://unified_api:8000/llm-service` |
 
 ### Unified API route prefixes
@@ -65,6 +66,8 @@ Canonical documentation: [docs/README.md](../../docs/README.md)
 Inside `unified_api` container: `LLM_SERVICE_BASE_URL=http://localhost:8000/llm-service`
 
 From other containers (e.g. `fin_rag`): `http://unified_api:8000/llm-service`
+
+From **external** compose projects (Option 3 gateway): `http://unified-api-gateway` on network `rag_shared`, or host port `8080`. See [docs/unified-api/cross-compose-integration.md](../../docs/unified-api/cross-compose-integration.md).
 
 ## Authoring Rules
 

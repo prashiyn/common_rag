@@ -1,0 +1,34 @@
+# Optional TLS server for unified_api_gateway.
+#
+# Setup:
+#   1. Generate or obtain certs under docker/nginx/certs/ (see cross-compose-integration.md).
+#   2. cp docker/nginx/ssl.conf.example docker/nginx/ssl.conf
+#   3. Set UNIFIED_API_GATEWAY_TLS_PORT in .env (default 8443).
+#   4. Mount ssl.conf in compose (already wired when the file exists — copy and recreate gateway).
+#
+# Do not commit docker/nginx/ssl.conf or private keys.
+
+server {
+    listen 443 ssl;
+    server_name _;
+
+    ssl_certificate     /etc/nginx/certs/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/privkey.pem;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+
+    client_max_body_size 256m;
+
+    location / {
+        proxy_pass http://unified_api:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 600s;
+        proxy_read_timeout 600s;
+    }
+}

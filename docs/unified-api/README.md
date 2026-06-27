@@ -7,11 +7,15 @@ Single FastAPI process that mounts all seven application services under path pre
 From repo root, with `.env` configured:
 
 ```bash
-# Infrastructure + unified API
+# Unified API only
 docker compose --env-file .env up -d unified_api
+
+# Unified API + gateway for external compose consumers (Option 3)
+docker compose --env-file .env up -d unified_api unified_api_gateway
 
 # Health check
 curl -fsS http://127.0.0.1:8000/health
+curl -fsS http://127.0.0.1:8080/health   # via gateway
 curl -fsS http://127.0.0.1:8000/llm-service/health
 ```
 
@@ -51,7 +55,9 @@ docker compose --env-file .env build unified_api
 
 ## Related docs
 
+- [access-guide.md](./access-guide.md) — how to start, reach, and verify the unified API
 - [configuration.md](./configuration.md) — environment variables
 - [api-overview.md](./api-overview.md) — prefixes and health checks
 - [migration-notes.md](./migration-notes.md) — URL changes for external integrators
-- [unified-api-implementation-plan.md](../unified-api-implementation-plan.md) — architecture and implementation steps
+- [cross-compose-integration.md](./cross-compose-integration.md) — calling unified API from another Docker Compose project
+- [openapi.md](./openapi.md) — OpenAPI exports and client consumption

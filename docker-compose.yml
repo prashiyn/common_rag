@@ -152,6 +152,28 @@ services:
       start_period: 120s
     restart: unless-stopped
 
+  # Option 3 ingress: stable URL for external compose stacks (see docs/unified-api/cross-compose-integration.md).
+  unified_api_gateway:
+    image: nginx:1.27-alpine
+    container_name: unified-api-gateway
+    ports:
+      - "${UNIFIED_API_GATEWAY_PORT:-8080}:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      unified_api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - default
+      - rag_shared
+    restart: unless-stopped
+
   # One-shot Alembic (same image as fin_rag). fin_rag waits for exit 0 before starting.
   fin_rag_migrate:
     build:
@@ -203,3 +225,8 @@ services:
       chroma:
         condition: service_healthy
     restart: unless-stopped
+
+networks:
+  rag_shared:
+    name: rag_shared
+    driver: bridge

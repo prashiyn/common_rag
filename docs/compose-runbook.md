@@ -117,6 +117,15 @@ docker compose --env-file .env ps
 
 Unified API: `http://127.0.0.1:8000` — `fin_rag` remains on port **6005**.
 
+**External consumers (Option 3):** start the gateway and use port **8080**:
+
+```bash
+docker compose --env-file .env up -d unified_api unified_api_gateway
+curl -fsS http://127.0.0.1:8080/health
+```
+
+See [unified-api/cross-compose-integration.md](./unified-api/cross-compose-integration.md).
+
 ### Test stack
 
 ```bash

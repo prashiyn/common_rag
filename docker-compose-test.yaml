@@ -154,6 +154,23 @@ services:
       start_period: 120s
     restart: unless-stopped
 
+  unified_api_gateway:
+    image: nginx:1.27-alpine
+    ports:
+      - "18080:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      unified_api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
   fin_rag_migrate:
     build:
       context: ./fin_rag
